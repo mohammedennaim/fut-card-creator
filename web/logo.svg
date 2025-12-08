@@ -1,0 +1,27 @@
+<svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer circle (golden ring) -->
+  <circle cx="50" cy="50" r="48" fill="none" stroke="#FDB813" stroke-width="4"/>
+  
+  <!-- Inner white background -->
+  <circle cx="50" cy="50" r="44" fill="#FFFFFF"/>
+  
+  <!-- Soccer ball (blue) -->
+  <circle cx="50" cy="35" r="18" fill="#2E5BBA"/>
+  
+  <!-- Soccer ball pentagon pattern -->
+  <polygon points="50,20 44,27 46,36 54,36 56,27" fill="#FFFFFF"/>
+  <polygon points="38,29 36,35 42,42 46,36 44,27" fill="#FFFFFF"/>
+  <polygon points="62,29 56,27 54,36 58,42 64,35" fill="#FFFFFF"/>
+  <polygon points="42,42 46,50 54,50 58,42 50,45" fill="#FFFFFF"/>
+  <polygon points="36,35 38,45 44,50 46,50 42,42" fill="#FFFFFF"/>
+  <polygon points="64,35 58,42 54,50 56,50 62,45" fill="#FFFFFF"/>
+  
+  <!-- Shield/Trophy base (golden) -->
+  <path d="M30 55 L50 65 L70 55 L70 80 C70 86 64 90 50 90 C36 90 30 86 30 80 Z" fill="#FDB813"/>
+  
+  <!-- Shield inner highlight -->
+  <path d="M33 58 L50 67 L67 58 L67 78 C67 83 62 87 50 87 C38 87 33 83 33 78 Z" fill="#FFD700"/>
+  
+  <!-- Small highlight on ball -->
+  <circle cx="45" cy="28" r="3" fill="#FFFFFF" opacity="0.7"/>
+</svg>

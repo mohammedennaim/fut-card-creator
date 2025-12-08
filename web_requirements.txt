@@ -1,0 +1,6 @@
+# متطلبات واجهة الويب - Web Frontend Requirements
+
+flask==2.3.0
+flask-cors==4.0.0
+Pillow==12.0.0
+requests==2.32.5

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منشئ بطاقات FIFA Ultimate Team</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="logo.svg">
+    
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Professional Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->    <header class="header">
+        <div class="container">            <div class="logo">
+                <img src="logo.svg" alt="FIFA Logo" class="logo-image">
+                <div class="logo-text">
+                    <h1>منشئ بطاقات FIFA</h1>
+                    <p>FIFA Ultimate Team Card Creator</p>
+                </div>
+            </div><nav class="nav">
+                <a href="formation.html" class="nav-btn nav-link" style="text-decoration: none; margin-right: 10px;">
+                    <i class="fas fa-chess-board"></i> Formation Planner
+                </a>
+                <button class="nav-btn active" data-lang="ar"><i class="fas fa-globe"></i> العربية</button>
+                <button class="nav-btn" data-lang="en"><i class="fas fa-globe"></i> English</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2 class="hero-title">أنشئ بطاقتك المخصصة الآن!</h2>
+            <p class="hero-subtitle">صمم بطاقة FIFA احترافية للاعبك المفضل في دقائق</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="content-grid">
+                <!-- Form Section -->                <div class="form-section card">
+                    <h3 class="section-title">
+                        <i class="fas fa-edit"></i>
+                        معلومات اللاعب
+                    </h3>
+                    
+                    <form id="playerForm" class="player-form">
+                        <!-- Player Name -->                        <div class="form-group">
+                            <label for="playerName">
+                                <i class="fas fa-user"></i>
+                                اسم اللاعب
+                            </label>
+                            <input 
+                                type="text" 
+                                id="playerName" 
+                                name="name"
+                                placeholder="مثال: SALAH"
+                                maxlength="12"
+                                required
+                            >
+                            <small class="form-hint">الاسم بالإنجليزية (حتى 12 حرف)</small>
+                        </div>
+
+                        <!-- Position -->                        <div class="form-group">
+                            <label for="position">
+                                <i class="fas fa-map-marker-alt"></i>
+                                المركز
+                            </label>
+                            <select id="position" name="position" required>
+                                <optgroup label="🎯 مهاجمين">
+                                    <option value="ST">ST - مهاجم صريح</option>
+                                    <option value="CF">CF - مهاجم وهمي</option>
+                                    <option value="RW" selected>RW - جناح أيمن</option>
+                                    <option value="LW">LW - جناح أيسر</option>
+                                </optgroup>
+                                <optgroup label="⚡ خط الوسط">
+                                    <option value="CAM">CAM - صانع ألعاب</option>
+                                    <option value="CM">CM - وسط</option>
+                                    <option value="CDM">CDM - وسط دفاعي</option>
+                                    <option value="RM">RM - وسط أيمن</option>
+                                    <option value="LM">LM - وسط أيسر</option>
+                                </optgroup>
+                                <optgroup label="🛡️ الدفاع">
+                                    <option value="CB">CB - قلب دفاع</option>
+                                    <option value="RB">RB - ظهير أيمن</option>
+                                    <option value="LB">LB - ظهير أيسر</option>
+                                    <option value="RWB">RWB - ظهير جناح أيمن</option>
+                                    <option value="LWB">LWB - ظهير جناح أيسر</option>
+                                </optgroup>
+                                <optgroup label="🥅 حراسة المرمى">
+                                    <option value="GK">GK - حارس مرمى</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <!-- Club -->                        <div class="form-group">
+                            <label for="club">
+                                <i class="fas fa-shield-alt"></i>
+                                النادي
+                            </label>
+                            <select id="club" name="club" required>
+                                <optgroup label="🌍 أندية عربية">
+                                    <option value="112885">الهلال - السعودية</option>
+                                    <option value="112883">النصر - السعودية</option>
+                                    <option value="112879">الاتحاد - السعودية</option>
+                                    <option value="111147">الأهلي - مصر</option>
+                                    <option value="111146">الزمالك - مصر</option>
+                                    <option value="110637">الوداد - المغرب</option>
+                                    <option value="110636">الرجاء - المغرب</option>
+                                </optgroup>
+                                <optgroup label="🇪🇸 إسبانيا">
+                                    <option value="243">ريال مدريد</option>
+                                    <option value="241">برشلونة</option>
+                                    <option value="240">أتلتيكو مدريد</option>
+                                </optgroup>
+                                <optgroup label="🏴󠁧󠁢󠁥󠁮󠁧󠁿 إنجلترا">
+                                    <option value="10" selected>ليفربول</option>
+                                    <option value="11">مانشستر يونايتد</option>
+                                    <option value="5">تشيلسي</option>
+                                    <option value="1">أرسنال</option>
+                                    <option value="10">مانشستر سيتي</option>
+                                </optgroup>
+                                <optgroup label="🇩🇪 ألمانيا">
+                                    <option value="73">بايرن ميونخ</option>
+                                    <option value="22">بوروسيا دورتموند</option>
+                                </optgroup>
+                                <optgroup label="🇮🇹 إيطاليا">
+                                    <option value="45">يوفنتوس</option>
+                                    <option value="44">إنتر ميلان</option>
+                                    <option value="47">ميلان</option>
+                                </optgroup>
+                                <optgroup label="🇫🇷 فرنسا">
+                                    <option value="73">باريس سان جيرمان</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <!-- Country -->                        <div class="form-group">
+                            <label for="country">
+                                <i class="fas fa-flag"></i>
+                                الدولة
+                            </label>
+                            <select id="country" name="country" required>
+                                <optgroup label="🌍 دول عربية">
+                                    <option value="eg" selected>🇪🇬 مصر</option>
+                                    <option value="sa">🇸🇦 السعودية</option>
+                                    <option value="ma">🇲🇦 المغرب</option>
+                                    <option value="dz">🇩🇿 الجزائر</option>
+                                    <option value="tn">🇹🇳 تونس</option>
+                                    <option value="ae">🇦🇪 الإمارات</option>
+                                    <option value="qa">🇶🇦 قطر</option>
+                                </optgroup>
+                                <optgroup label="🌎 دول أخرى">
+                                    <option value="ar">🇦🇷 الأرجنتين</option>
+                                    <option value="br">🇧🇷 البرازيل</option>
+                                    <option value="pt">🇵🇹 البرتغال</option>
+                                    <option value="es">🇪🇸 إسبانيا</option>
+                                    <option value="fr">🇫🇷 فرنسا</option>
+                                    <option value="gb">🏴󠁧󠁢󠁥󠁮󠁧󠁿 إنجلترا</option>
+                                    <option value="de">🇩🇪 ألمانيا</option>
+                                    <option value="it">🇮🇹 إيطاليا</option>
+                                    <option value="nl">🇳🇱 هولندا</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <!-- Card Type -->
+                        <div class="form-group">
+                            <label for="cardType">
+                                <span class="label-icon">🎴</span>
+                                نوع البطاقة
+                            </label>                            <select id="cardType" name="cardType" required>
+                                <optgroup label="⭐ البطاقات العادية">
+                                    <option value="COMMON_BRONZE">🥉 برونزية عادية</option>
+                                    <option value="COMMON_SILVER">🥈 فضية عادية</option>
+                                    <option value="COMMON_GOLD">🥇 ذهبية عادية</option>
+                                    <option value="RARE_BRONZE">🥉 برونزية نادرة</option>
+                                    <option value="RARE_SILVER">🥈 فضية نادرة</option>
+                                    <option value="RARE_GOLD" selected>🥇 ذهبية نادرة</option>
+                                </optgroup>
+                                <optgroup label="🔥 بطاقات خاصة">
+                                    <option value="IF_BRONZE">🔥 في الشكل برونزية</option>
+                                    <option value="IF_SILVER">🔥 في الشكل فضية</option>
+                                    <option value="IF_GOLD">🔥 في الشكل ذهبية</option>
+                                    <option value="MOTM">🎖️ رجل المباراة</option>
+                                    <option value="HERO">💪 بطل</option>
+                                </optgroup>
+                                <optgroup label="🏆 فرق الموسم">
+                                    <option value="TOTY">🏆 فريق العام</option>
+                                    <option value="TOTY_N">🏆 مرشح فريق العام</option>
+                                    <option value="TOTS">🌟 فريق الموسم</option>
+                                </optgroup>
+                                <optgroup label="⚽ دوري الأبطال">
+                                    <option value="COMMON_UCL">⚽ دوري الأبطال عادية</option>
+                                    <option value="RARE_UCL">⚽ دوري الأبطال نادرة</option>
+                                    <option value="UCL_MOTM">⚽ رجل مباراة دوري الأبطال</option>
+                                    <option value="UCL_LIVE">⚽ دوري الأبطال مباشر</option>
+                                </optgroup>
+                                <optgroup label="🟠 الدوري الأوروبي">
+                                    <option value="EL">🟠 الدوري الأوروبي</option>
+                                    <option value="EL_MOTM">🟠 رجل مباراة الدوري الأوروبي</option>
+                                    <option value="EL_LIVE">🟠 الدوري الأوروبي مباشر</option>
+                                </optgroup>
+                                <optgroup label="👑 أساطير">
+                                    <option value="ICON">👑 أيقونة</option>
+                                    <option value="LEGEND">👑 أسطورة</option>
+                                </optgroup>
+                                <optgroup label="🎨 أخرى">
+                                    <option value="FUTTIES">🎉 فوتيز</option>
+                                    <option value="FUTTIESW">🏅 فوتيز فائز</option>
+                                    <option value="HEADLINERS">📰 العناوين</option>
+                                    <option value="FB">⏪ فلاش باك</option>
+                                    <option value="FS">🌟 نجوم المستقبل</option>
+                                    <option value="SBC">🔧 SBC</option>
+                                    <option value="SBCP">🔧 SBC بريميوم</option>
+                                </optgroup>
+                            </select>
+                        </div>                        <!-- Player Image Upload -->
+                        <div class="form-group">
+                            <label for="playerImage">
+                                <span class="label-icon">📸</span>
+                                صورة اللاعب
+                            </label>
+                            <div class="image-upload-container">
+                                <input 
+                                    type="file" 
+                                    id="playerImage" 
+                                    name="playerImage"
+                                    accept="image/png,image/jpeg,image/jpg,image/webp"
+                                    class="file-input"
+                                >
+                                <label for="playerImage" class="file-label">
+                                    <span class="upload-icon">📁</span>
+                                    <span id="fileName">اختر صورة اللاعب</span>
+                                </label>
+                                <div id="imagePreview" class="image-preview hidden">
+                                    <img id="previewImg" src="" alt="Player Preview">
+                                    <button type="button" class="remove-image" onclick="removeImage()">✖</button>
+                                </div>
+                            </div>
+                            <small class="form-hint">PNG, JPG أو WEBP (اختياري)</small>
+                        </div>
+
+                        <!-- Overall Rating -->
+                        <div class="form-group">
+                            <label for="overall">
+                                <span class="label-icon">⭐</span>
+                                التقييم العام: <span id="overallValue">90</span>
+                            </label>
+                            <input 
+                                type="range" 
+                                id="overall" 
+                                name="overall"
+                                min="40" 
+                                max="99" 
+                                value="90"
+                                class="slider"
+                            >
+                        </div>
+
+                        <!-- Stats Grid -->
+                        <div class="stats-grid">
+                            <!-- Pace -->
+                            <div class="form-group">
+                                <label for="pac">
+                                    <span class="stat-label">⚡ السرعة</span>
+                                    <span id="pacValue" class="stat-value">90</span>
+                                </label>
+                                <input type="range" id="pac" name="pac" min="0" max="99" value="90" class="slider">
+                            </div>
+
+                            <!-- Shooting -->
+                            <div class="form-group">
+                                <label for="sho">
+                                    <span class="stat-label">🎯 التسديد</span>
+                                    <span id="shoValue" class="stat-value">85</span>
+                                </label>
+                                <input type="range" id="sho" name="sho" min="0" max="99" value="85" class="slider">
+                            </div>
+
+                            <!-- Passing -->
+                            <div class="form-group">
+                                <label for="pas">
+                                    <span class="stat-label">🎁 التمرير</span>
+                                    <span id="pasValue" class="stat-value">80</span>
+                                </label>
+                                <input type="range" id="pas" name="pas" min="0" max="99" value="80" class="slider">
+                            </div>
+
+                            <!-- Dribbling -->
+                            <div class="form-group">
+                                <label for="dri">
+                                    <span class="stat-label">🏃 المراوغة</span>
+                                    <span id="driValue" class="stat-value">88</span>
+                                </label>
+                                <input type="range" id="dri" name="dri" min="0" max="99" value="88" class="slider">
+                            </div>
+
+                            <!-- Defending -->
+                            <div class="form-group">
+                                <label for="def">
+                                    <span class="stat-label">🛡️ الدفاع</span>
+                                    <span id="defValue" class="stat-value">45</span>
+                                </label>
+                                <input type="range" id="def" name="def" min="0" max="99" value="45" class="slider">
+                            </div>
+
+                            <!-- Physical -->
+                            <div class="form-group">
+                                <label for="phy">
+                                    <span class="stat-label">💪 اللياقة</span>
+                                    <span id="phyValue" class="stat-value">75</span>
+                                </label>
+                                <input type="range" id="phy" name="phy" min="0" max="99" value="75" class="slider">
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary">
+                            <span class="btn-icon">🎨</span>
+                            إنشاء البطاقة
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Preview Section -->
+                <div class="preview-section">
+                    <div class="card preview-card">
+                        <h3 class="section-title">
+                            <span class="icon">👁️</span>
+                            معاينة البطاقة
+                        </h3>
+                        
+                        <div id="cardPreview" class="card-preview">
+                            <div class="preview-placeholder">
+                                <div class="placeholder-icon">⚽</div>
+                                <p>املأ النموذج لمعاينة بطاقتك</p>
+                            </div>
+                        </div>
+
+                        <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+                            <div class="spinner"></div>
+                            <p>جاري إنشاء البطاقة...</p>
+                        </div>
+
+                        <div id="successMessage" class="success-message" style="display: none;">
+                            <div class="success-icon">✅</div>
+                            <h4>تم إنشاء البطاقة بنجاح!</h4>
+                            <p>البطاقة محفوظة في: <code>finished-fut-cards/</code></p>
+                            <button class="btn btn-secondary" onclick="downloadCard()">
+                                <span class="btn-icon">📥</span>
+                                تحميل البطاقة
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="card quick-actions">
+                        <h4 class="section-subtitle">إعدادات سريعة</h4>
+                        <div class="action-buttons">
+                            <button class="btn btn-small" onclick="fillSalah()">
+                                <span class="flag">🇪🇬</span> محمد صلاح
+                            </button>
+                            <button class="btn btn-small" onclick="fillRonaldo()">
+                                <span class="flag">🇵🇹</span> رونالدو
+                            </button>
+                            <button class="btn btn-small" onclick="fillMessi()">
+                                <span class="flag">🇦🇷</span> ميسي
+                            </button>
+                            <button class="btn btn-small" onclick="resetForm()">
+                                <span class="icon">🔄</span> إعادة تعيين
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Info Card -->
+                    <div class="card info-card">
+                        <h4 class="section-subtitle">💡 نصائح سريعة</h4>
+                        <ul class="info-list">
+                            <li>الأسماء يجب أن تكون بالإنجليزية</li>
+                            <li>حد أقصى 12 حرف للاسم</li>
+                            <li>جميع القيم من 0 إلى 99</li>
+                            <li>جرب أنواع بطاقات مختلفة!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>🎮 FIFA Ultimate Team Card Creator</p>
+            <p>Made with ❤️ for FIFA fans</p>
+            <div class="footer-links">
+                <a href="#" onclick="openGuide()">📖 دليل الاستخدام</a>
+                <a href="#" onclick="openExamples()">🎯 أمثلة</a>
+                <a href="#" onclick="openGitHub()">💻 GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

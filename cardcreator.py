@@ -2,7 +2,7 @@ import os
 from io import BytesIO
 
 import requests
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 from resources.cardcode_to_card import cardcode_to_card
 from resources.exceptions import *
@@ -14,7 +14,7 @@ def render_card(player, card_code, player_image_url, dynamic_img_fl, status_id):
 
     if card_obj is None:
         raise InvalidCardCodeError(f'Card code ({card_code}) is invalid.')
-
+    
     card_background = card_obj.background_image_dir
     font_colour_top = card_obj.font_colour_tuple[0]
     font_colour_bottom = card_obj.font_colour_tuple[1]
@@ -30,10 +30,13 @@ def render_card(player, card_code, player_image_url, dynamic_img_fl, status_id):
     attribute_value_font = ImageFont.truetype(fonts_tuple[3][0], fonts_tuple[3][1])
     attribute_label_font = ImageFont.truetype(fonts_tuple[4][0], fonts_tuple[4][1])
 
-    w, h = draw.textsize(player.name, name_font)
-    w2, h2 = draw.textsize(player.position.name, position_font)
+    # Use textbbox instead of textsize for newer Pillow versions
+    bbox = draw.textbbox((0, 0), player.name, name_font)
+    w, h = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    bbox2 = draw.textbbox((0, 0), player.position.name, position_font)
+    w2, h2 = bbox2[2] - bbox2[0], bbox2[3] - bbox2[1]
 
-    player_name_left_margin = (card_bg_img.width - w) / 2
+    player_name_left_margin = (card_bg_img.width - w) / 3
     player_position_left_margin = card_obj.dimensions.left_margin + 50 - (w2 / 2)
 
     add_player_attributes_section(draw, card_obj, font_colour_bottom, player, attribute_value_font, attribute_label_font)
@@ -48,13 +51,32 @@ def render_card(player, card_code, player_image_url, dynamic_img_fl, status_id):
         temp_filename = f'{status_id}.png'
         temp_file_path = os.path.join(temp_path, temp_filename)
 
-        request = requests.get(player_image_url, stream=True)
-        if request.status_code == 200:
-            # read data from downloaded bytes and returns a PIL.Image.Image object
-            i = Image.open(BytesIO(request.content))
-            # Saves the image under the given filename
-            i.save(temp_file_path)
+        # Check if it's a local file path or URL
+        if os.path.isfile(player_image_url):
+            # It's a local file, copy it
+            try:
+                i = Image.open(player_image_url)
+                i.save(temp_file_path)
+            except Exception as e:
+                print(f"Error loading local image: {str(e)}")
+                # If fails, skip image processing
+                player_image_url = None
+        else:
+            # It's a URL, download it
+            try:
+                request = requests.get(player_image_url, stream=True)
+                if request.status_code == 200:
+                    # read data from downloaded bytes and returns a PIL.Image.Image object
+                    i = Image.open(BytesIO(request.content))
+                    # Saves the image under the given filename
+                    i.save(temp_file_path)
+                else:
+                    player_image_url = None
+            except Exception as e:
+                print(f"Error downloading image: {str(e)}")
+                player_image_url = None
 
+        if player_image_url is not None:
             if dynamic_img_fl:
                 card_bg_img = stamp_dynamic_player_image(card_bg_img, card_obj, temp_file_path, status_id)
                 draw = ImageDraw.Draw(card_bg_img)
@@ -77,10 +99,86 @@ def render_card(player, card_code, player_image_url, dynamic_img_fl, status_id):
 
 
 def stamp_player_image(card_bg_img, card_obj, player_image_filename):
+    """
+    دالة محسّنة لإضافة صورة اللاعب على البطاقة
+    تتعامل مع الخلفية البيضاء والشفافية بشكل أفضل
+    Improved function to add player image to card
+    Better handling of white backgrounds and transparency
+    """
     player_img = Image.open(player_image_filename).convert('RGBA')
-    player_img = player_img.resize((320, 320))
-
-    card_bg_img.paste(player_img, (card_obj.dimensions.left_margin_player_image, card_bg_img.height - player_img.height - 383), player_img)
+    
+    # تطبيق فلتر خفيف لتنعيم الحواف
+    # Apply light filter to smooth edges
+    player_img = player_img.filter(ImageFilter.SMOOTH_MORE)
+    
+    # الطريقة المحسّنة لإزالة الخلفية البيضاء/الفاتحة
+    # Improved method for removing white/light backgrounds
+    datas = player_img.getdata()
+    newData = []
+    
+    for item in datas:
+        # تحسين عملية الكشف عن الخلفية البيضاء
+        # Improved white background detection
+        r, g, b, a = item[0], item[1], item[2], item[3] if len(item) == 4 else 255
+        
+        # حساب مدى قرب اللون من الأبيض
+        # Calculate how close the color is to white
+        white_distance = abs(r - 255) + abs(g - 255) + abs(b - 255)
+        
+        # إذا كان اللون قريب جداً من الأبيض (مجموع الفرق أقل من 30)
+        # If color is very close to white (sum of difference less than 30)
+        if white_distance < 30:
+            # نجعله شفاف تماماً
+            # Make it completely transparent
+            newData.append((255, 255, 255, 0))
+        # إذا كان قريب من الأبيض (30-60) - شفافية تدريجية
+        # If close to white (30-60) - gradual transparency
+        elif white_distance < 60:
+            # نقلل الشفافية تدريجياً
+            # Gradually reduce opacity
+            new_alpha = int((white_distance / 60) * 255)
+            newData.append((r, g, b, new_alpha))
+        else:
+            # نحتفظ بالبكسل كما هو
+            # Keep pixel as is
+            newData.append((r, g, b, a))
+    
+    player_img.putdata(newData)
+    
+    # حساب الحجم المناسب مع الحفاظ على نسبة الأبعاد
+    # Calculate appropriate size while maintaining aspect ratio
+    original_width, original_height = player_img.size
+    
+    # الحجم المطلوب للصورة على البطاقة
+    # Target size for image on card
+    target_height = 380
+    aspect_ratio = original_width / original_height
+    target_width = int(target_height * aspect_ratio)
+    
+    # إذا كان العرض كبير جداً، نعدل بناءً على العرض
+    # If width is too large, adjust based on width
+    max_width = 420
+    if target_width > max_width:
+        target_width = max_width
+        target_height = int(target_width / aspect_ratio)
+    
+    # تغيير حجم الصورة مع الحفاظ على الجودة
+    # Resize image while maintaining quality
+    player_img = player_img.resize((target_width, target_height), Image.Resampling.LANCZOS)
+    
+    # حساب الموضع المثالي للصورة
+    # Calculate ideal position for image
+    # نضع الصورة في المنتصف أفقياً
+    # Center image horizontally
+    x_position = (card_bg_img.width - player_img.width) // 2 + 50
+    
+    # الموضع العمودي - بين التقييم والاسم
+    # Vertical position - between rating and name
+    y_position = 57
+    
+    # لصق الصورة مع الحفاظ على الشفافية
+    # Paste image while preserving transparency
+    card_bg_img.paste(player_img, (x_position, y_position), player_img)
 
 
 def stamp_dynamic_player_image(card_bg_img, card_obj, player_image_filename, status_id):
@@ -219,3 +317,5 @@ def add_separator_lines(draw, card_obj, font_colour_top, font_colour_bottom):
     draw.line(((draw.im.size[0] / 2), card_obj.dimensions.top_margin_vertical_line_between_stats_columns,
                (draw.im.size[0] / 2), card_obj.dimensions.bottom_point_vertical_line_between_stats_columns),
               fill=font_colour_bottom, width=LINE_WIDTH)
+
+              

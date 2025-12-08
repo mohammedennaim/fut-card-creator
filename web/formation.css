@@ -1,0 +1,683 @@
+/* ===== FIFA Formation Planner - FIXED CSS ===== */
+
+/* 1. Reset & Global Variables */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #8B5CF6;
+    --secondary-color: #A78BFA;
+    --accent-color: #F59E0B;
+    --dark-bg: #020617;
+    --card-bg: rgba(30, 27, 75, 0.7);
+    --gradient-card: linear-gradient(145deg, rgba(30, 27, 75, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--dark-bg);
+    color: #E2E8F0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Header */
+.header {
+    background: var(--gradient-card);
+    padding: 1rem 2rem;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-image {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(0, 168, 255, 0.3));
+}
+
+.logo-text h1 {
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin: 0;
+}
+
+.logo-text p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin: 0;
+    opacity: 0.8;
+}
+
+/* Layout Grid */
+.main-content {
+    padding: 20px;
+    height: calc(100vh - 80px);
+}
+
+.planner-grid {
+    display: grid;
+    grid-template-columns: 60px 300px 1fr 300px; /* Adjusted columns */
+    gap: 20px;
+    height: 100%;
+}
+
+/* Sidebar & Panels */
+.cards-panel, .rating-panel {
+    background: var(--gradient-card);
+    border-radius: 16px;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.panel-header {
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+}
+
+.cards-content {
+    padding: 15px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.available-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+/* Mini Cards (Sidebar) */
+.fifa-card-mini {
+    width: 100%;
+    cursor: grab;
+    transition: transform 0.2s;
+}
+.fifa-card-mini:hover { transform: scale(1.05); }
+.fifa-card-mini img { width: 100%; border-radius: 5px; display: block; }
+
+/* === FIELD AREA (CRITICAL FIXES) === */
+.field-container {
+    background: #0f172a;
+    border-radius: 20px;
+    border: 2px solid #1e293b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.field-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 904/650; /* Maintains field shape */
+    margin: 0 auto;
+}
+
+.field-bg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
+}
+
+/* The Container for Players - Must Overlay Perfectly */
+.players-on-field {
+    position: absolute;
+    inset: 0; /* Top, Right, Bottom, Left all 0 */
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+/* Player Card On Field */
+.player-card-on-field {
+    position: absolute;
+    width: 110px; /* Card Width */
+    height: auto;
+    z-index: 20;
+    cursor: grab;
+    transform-origin: center center;
+    /* Remove default margins that might shift it */
+    margin: 0; 
+    user-select: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.player-card-on-field img {
+    width: 100%;
+    display: block;
+    pointer-events: none; /* Let clicks pass to the card div */
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+}
+
+.player-card-on-field:hover {
+    z-index: 30;
+    transform: scale(1.1);
+}
+
+.player-card-on-field.dragging {
+    opacity: 0.8;
+    cursor: grabbing;
+}
+
+/* Remove Button */
+.remove-player {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #EF4444;
+    color: white;
+    border: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    display: none;
+    z-index: 40;
+}
+
+.player-card-on-field:hover .remove-player {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Quick Actions Sidebar */
+.quick-actions-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 20px;
+}
+.icon-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: #1e293b;
+    border: 1px solid #475569;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+.icon-btn:hover { background: var(--primary-color); }
+
+/* Rating Panel Stats */
+.stat-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.stat-bar { flex: 1; height: 6px; background: #334155; border-radius: 3px; }
+.stat-fill { height: 100%; background: var(--accent-color); border-radius: 3px; transition: width 0.5s; }
+.stat-value { width: 30px; text-align: right; font-size: 0.8rem; }
+
+/* 5. Panels (Cards Sidebar & Ratings) */
+.cards-panel, 
+.rating-panel {
+    background: var(--gradient-card);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.panel-header {
+    background: rgba(139, 92, 246, 0.2);
+    padding: 1rem;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.panel-header h3 {
+    font-size: 1.1rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.panel-header h3 i {
+    color: var(--accent-color);
+}
+
+/* Cards List Styles */
+.cards-content, .rating-content {
+    padding: 1rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.available-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.2);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+/* Mini Cards in Sidebar */
+.fifa-card-mini {
+    position: relative;
+    cursor: grab;
+    transition: var(--transition);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid transparent;
+}
+
+.fifa-card-mini img {
+    width: 100%;
+    display: block;
+    border-radius: 6px;
+}
+
+.fifa-card-mini:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+    box-shadow: var(--gold-glow);
+}
+
+.fifa-card-mini.on-field {
+    opacity: 0.5;
+    filter: grayscale(80%);
+    cursor: not-allowed;
+}
+
+.on-field-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--success-color);
+    color: white;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* 6. Field Area */
+.field-container {
+    background: var(--gradient-card);
+    border-radius: 20px;
+    border: 2px solid rgba(139, 92, 246, 0.3);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+}
+
+.field-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    aspect-ratio: 904/650;
+}
+
+.field-bg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 20px rgba(10, 95, 56, 0.4));
+}
+
+.players-on-field {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Drag Over Effect */
+.players-on-field.drag-over {
+    background: rgba(245, 158, 11, 0.1);
+    border: 2px dashed var(--accent-color);
+    border-radius: 12px;
+}
+
+/* Yellow Highlight Box */
+.drop-zone-highlight {
+    position: absolute;
+    width: 120px;
+    height: 150px;
+    border: 2px solid var(--accent-color);
+    background: rgba(245, 158, 11, 0.2);
+    border-radius: 8px;
+    transform: translate(-50%, -50%);
+    pointer-events: none; /* Crucial for drop to work */
+    box-shadow: 0 0 30px var(--accent-color);
+    z-index: 1;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 20px var(--accent-color); border-color: rgba(245, 158, 11, 0.5); }
+    50% { box-shadow: 0 0 40px var(--accent-color); border-color: rgba(245, 158, 11, 1); }
+    100% { box-shadow: 0 0 20px var(--accent-color); border-color: rgba(245, 158, 11, 0.5); }
+}
+
+/* 7. Player Cards ON FIELD */
+.player-card-on-field {
+    position: absolute;
+    width: 110px; /* Adjust size */
+    z-index: 10;
+    cursor: grab;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.player-card-on-field:hover {
+    z-index: 20;
+    transform: scale(1.15); /* Just scale, don't translate */
+}
+
+.player-card-on-field img {
+    width: 100%;
+    display: block;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.6));
+}
+
+.player-card-on-field .remove-player {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--danger-color);
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.player-card-on-field:hover .remove-player {
+    display: flex; /* Show on hover */
+    animation: popIn 0.2s ease;
+}
+
+/* Info Overlay (Optional if metadata is present) */
+.player-info-overlay {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    padding: 4px 8px;
+    border-radius: 4px;
+    width: 120%;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.player-card-on-field:hover .player-info-overlay {
+    opacity: 1;
+}
+
+.player-name {
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+.player-stats {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    font-size: 0.6rem;
+    color: white;
+}
+
+/* 8. Rating Panel Stats */
+.overall-rating {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.rating-circle {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: var(--gradient-dark);
+    border: 4px solid var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px var(--neon-glow);
+    position: relative;
+}
+
+.rating-circle::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-color);
+    animation: spin 10s linear infinite;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+.rating-value {
+    font-size: 2.5rem;
+    font-weight: 900;    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.rating-label {
+    margin-top: 0.5rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+}
+
+/* Stat Bars */
+.stat-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.stat-label {
+    width: 60px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+}
+
+.stat-bar {
+    flex: 1;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.stat-fill {
+    height: 100%;
+    background: var(--gradient-gold);
+    border-radius: 4px;
+    width: 0%; /* JS updates this */
+    transition: width 1s ease-out;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+
+.stat-value {
+    width: 30px;
+    text-align: right;
+    font-weight: bold;
+    color: white;
+}
+
+/* Chemistry */
+.chemistry-section {
+    margin-top: 2rem;
+    background: rgba(0,0,0,0.2);
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+.chemistry-section h4 {
+    margin-bottom: 10px;
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+}
+
+.chemistry-value {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.chemistry-number {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--success-color);
+}
+
+.chemistry-bar {
+    height: 10px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 5px;
+}
+
+.chemistry-fill {
+    height: 100%;
+    background: var(--success-color);
+    border-radius: 5px;
+    box-shadow: 0 0 10px var(--success-color);
+    transition: width 1s ease;
+}
+
+/* Info Box */
+.formation-info {
+    margin-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1rem;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.info-row strong {
+    color: var(--accent-light);
+}
+
+/* 9. Feedback Animations */
+@keyframes popIn {
+    0% { transform: scale(0); }
+    80% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.formation-feedback, .download-feedback, .reposition-feedback {
+    z-index: 9999; /* Ensure visible on top */
+}
+
+/* 10. Responsive Design */
+@media (max-width: 1400px) {
+    .planner-grid {
+        grid-template-columns: 60px 250px 1fr 280px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .planner-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr auto; /* Stack vertically */
+        height: auto;
+    }
+
+    .quick-actions-sidebar {
+        flex-direction: row;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .cards-panel, .rating-panel {
+        height: 400px; /* Fixed height for mobile sections */
+    }
+    
+    .field-wrapper {
+        max-width: 100%;
+    }
+}
+
+/* 11. Image Preview Modal Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
+.image-preview-modal {
+    animation: fadeIn 0.3s ease !important;
+}
+
+.image-preview-modal.closing {
+    animation: fadeOut 0.3s ease !important;
+}

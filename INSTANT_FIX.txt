@@ -1,0 +1,51 @@
+# ⚡ INSTANT FIX - 3 Steps Only!
+
+## Step 1: Find This File
+```
+📁 c:\Users\Youcode\Desktop\fut-card-creator\
+   └─ START_SERVER_NOW.bat  ← Double-click this!
+```
+
+## Step 2: Double-Click It
+A black window will open showing:
+```
+========================================
+ Starting FIFA Card Creator Server
+========================================
+
+Checking Python...
+Python 3.x.x
+Starting server with 'python' command...
+
+🎮 FIFA Card Creator Web Server
+🌐 Server running at: http://localhost:5000
+✅ Server is ready!
+```
+
+## Step 3: Refresh Browser
+Go back to your browser and press `F5`
+
+**✅ DONE! Error fixed!** 🎉
+
+---
+
+## Alternative: Use PowerShell
+
+If batch file doesn't work:
+
+1. Open PowerShell
+2. Copy and paste:
+```powershell
+cd c:\Users\Youcode\Desktop\fut-card-creator; python web_server.py
+```
+3. Press Enter
+4. Wait for "Server is ready!"
+5. Refresh browser
+
+---
+
+## That's It!
+
+The error `ERR_CONNECTION_REFUSED` means the server wasn't running.
+
+Now it's running → Error gone! ✨
