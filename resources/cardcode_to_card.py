@@ -37,6 +37,7 @@ cardcode_to_card = {
     # TOTY
     'TOTY': Card.factory('FIFA19_STD', 'assets/19/cards/toty.png', (PORTICA, PORTICA), dinpro_fonts),
     'TOTY_N': Card.factory('FIFA19_STD', 'assets/19/cards/toty_nominees.png', (PORTICA, PORTICA), dinpro_fonts),
+    'TOTS': Card.factory('FIFA19_STD', 'assets/19/cards/toty.png', (PORTICA, PORTICA), dinpro_fonts),
 
     # Europa League
     'EL': Card.factory('FIFA19_STD', 'assets/19/cards/europa_league.png', (TANGERINE, TANGERINE), dinpro_fonts),

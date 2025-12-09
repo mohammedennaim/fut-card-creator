@@ -24,12 +24,25 @@ CORS(app)  # Enable CORS for all routes
 # Configuration
 OUTPUT_DIR = 'finished-fut-cards'
 WEB_DIR = 'web'
+ASSETS_DIR = 'assets'
 
 
 @app.route('/')
 def index():
     """Serve the main HTML page"""
     return send_from_directory(WEB_DIR, 'index.html')
+
+
+@app.route('/formation.html')
+def formation():
+    """Serve the formation planner page"""
+    return send_from_directory(WEB_DIR, 'formation.html')
+
+
+@app.route('/assets/<path:filepath>')
+def serve_assets(filepath):
+    """Serve assets files (card backgrounds, etc.)"""
+    return send_from_directory(ASSETS_DIR, filepath)
 
 
 @app.route('/api/create-card', methods=['POST'])

@@ -387,9 +387,9 @@ async function createCard() {
         // Hide loading
         loadingIndicator.style.display = 'none';
 
-        // Show the generated card image
+        // Store card data but DON'T show preview yet - only on download
         if (result.imageData) {
-            displayGeneratedCard(result.imageData, result.filename);
+            storeCardForDownload(result.imageData, result.filename);
         }
 
         // Show success message
@@ -430,6 +430,67 @@ function displayGeneratedCard(imageData, filename) {
         </div>
     `;
     cardPreview.style.display = 'block';
+}
+
+// Store card data without showing preview - only show download button
+function storeCardForDownload(imageData, filename) {
+    // Store for download
+    window.currentCardImage = imageData;
+    window.currentCardFilename = filename;
+
+    // Show only download button, NOT the card image
+    if (cardPreview) {
+        cardPreview.innerHTML = `
+            <div class="download-ready">
+                <div class="ready-icon">✅</div>
+                <p class="ready-text">البطاقة جاهزة للتحميل!</p>
+                <p class="ready-subtext">La carte est prête!</p>
+                <div class="download-buttons">
+                    <button onclick="downloadCard()" class="btn btn-primary download-btn">
+                        <span>📥</span>
+                        تحميل البطاقة / Télécharger
+                    </button>
+                    <button onclick="previewCard()" class="btn btn-secondary preview-btn">
+                        <span>👁️</span>
+                        معاينة / Aperçu
+                    </button>
+                </div>
+            </div>
+        `;
+        cardPreview.style.display = 'block';
+    }
+}
+
+// Show card preview when user clicks preview button
+function previewCard() {
+    if (!window.currentCardImage) {
+        alert('لا توجد بطاقة للمعاينة');
+        return;
+    }
+
+    // Show the card in a modal/popup
+    const modal = document.createElement('div');
+    modal.className = 'card-preview-modal';
+    modal.innerHTML = `
+        <div class="modal-overlay" onclick="closePreviewModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePreviewModal()">×</button>
+            <img src="${window.currentCardImage}" alt="FIFA Card Preview" class="modal-card-image">
+            <button onclick="downloadCard(); closePreviewModal();" class="btn btn-primary modal-download">
+                <span>📥</span>
+                تحميل البطاقة / Télécharger
+            </button>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+// Close preview modal
+function closePreviewModal() {
+    const modal = document.querySelector('.card-preview-modal');
+    if (modal) {
+        modal.remove();
+    }
 }
 
 function downloadCard() {

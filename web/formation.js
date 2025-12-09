@@ -3,47 +3,47 @@
 // API Configuration
 const API_URL = 'http://localhost:5000/api';
 
-// Formation positions (percentages relative to field)
+// Formation positions (percentages relative to field) - Cards FULLY inside field
 const formations = {
     '1-2-2-1': [
-        { position: 'GK', x: 50, y: 90, rating: 85, name: 'KEEPER' },
-        { position: 'LB', x: 25, y: 70, rating: 82, name: 'DEFENDER 1' },
-        { position: 'RB', x: 75, y: 70, rating: 83, name: 'DEFENDER 2' },
-        { position: 'LM', x: 30, y: 45, rating: 84, name: 'MIDFIELDER 1' },
-        { position: 'RM', x: 70, y: 45, rating: 85, name: 'MIDFIELDER 2' },
-        { position: 'ST', x: 50, y: 15, rating: 88, name: 'STRIKER' }
+        { position: 'GK', x: 50, y: 72, rating: 85, name: 'KEEPER' },
+        { position: 'LB', x: 25, y: 55, rating: 82, name: 'DEFENDER 1' },
+        { position: 'RB', x: 75, y: 55, rating: 83, name: 'DEFENDER 2' },
+        { position: 'LM', x: 28, y: 38, rating: 84, name: 'MIDFIELDER 1' },
+        { position: 'RM', x: 72, y: 38, rating: 85, name: 'MIDFIELDER 2' },
+        { position: 'ST', x: 50, y: 20, rating: 88, name: 'STRIKER' }
     ],
     '1-3-1-1': [
-        { position: 'GK', x: 50, y: 90, rating: 85, name: 'KEEPER' },
-        { position: 'LB', x: 20, y: 70, rating: 82, name: 'DEFENDER 1' },
-        { position: 'CB', x: 50, y: 75, rating: 84, name: 'DEFENDER 2' },
-        { position: 'RB', x: 80, y: 70, rating: 83, name: 'DEFENDER 3' },
-        { position: 'CM', x: 50, y: 45, rating: 85, name: 'MIDFIELDER' },
-        { position: 'ST', x: 50, y: 15, rating: 88, name: 'STRIKER' }
+        { position: 'GK', x: 50, y: 72, rating: 85, name: 'KEEPER' },
+        { position: 'LB', x: 22, y: 55, rating: 82, name: 'DEFENDER 1' },
+        { position: 'CB', x: 50, y: 58, rating: 84, name: 'DEFENDER 2' },
+        { position: 'RB', x: 78, y: 55, rating: 83, name: 'DEFENDER 3' },
+        { position: 'CM', x: 50, y: 38, rating: 85, name: 'MIDFIELDER' },
+        { position: 'ST', x: 50, y: 20, rating: 88, name: 'STRIKER' }
     ],
     '1-1-3-1': [
-        { position: 'GK', x: 50, y: 90, rating: 85, name: 'KEEPER' },
-        { position: 'CB', x: 50, y: 70, rating: 84, name: 'DEFENDER' },
-        { position: 'LM', x: 25, y: 45, rating: 83, name: 'MIDFIELDER 1' },
-        { position: 'CM', x: 50, y: 50, rating: 85, name: 'MIDFIELDER 2' },
-        { position: 'RM', x: 75, y: 45, rating: 84, name: 'MIDFIELDER 3' },
-        { position: 'ST', x: 50, y: 15, rating: 88, name: 'STRIKER' }
+        { position: 'GK', x: 50, y: 72, rating: 85, name: 'KEEPER' },
+        { position: 'CB', x: 50, y: 55, rating: 84, name: 'DEFENDER' },
+        { position: 'LM', x: 25, y: 38, rating: 83, name: 'MIDFIELDER 1' },
+        { position: 'CM', x: 50, y: 42, rating: 85, name: 'MIDFIELDER 2' },
+        { position: 'RM', x: 75, y: 38, rating: 84, name: 'MIDFIELDER 3' },
+        { position: 'ST', x: 50, y: 20, rating: 88, name: 'STRIKER' }
     ],
     '1-2-1-2': [
-        { position: 'GK', x: 50, y: 90, rating: 85, name: 'KEEPER' },
-        { position: 'LB', x: 25, y: 70, rating: 82, name: 'DEFENDER 1' },
-        { position: 'RB', x: 75, y: 70, rating: 83, name: 'DEFENDER 2' },
-        { position: 'CM', x: 50, y: 45, rating: 85, name: 'MIDFIELDER' },
-        { position: 'LW', x: 30, y: 15, rating: 86, name: 'WINGER 1' },
-        { position: 'RW', x: 70, y: 15, rating: 87, name: 'WINGER 2' }
+        { position: 'GK', x: 50, y: 72, rating: 85, name: 'KEEPER' },
+        { position: 'LB', x: 25, y: 55, rating: 82, name: 'DEFENDER 1' },
+        { position: 'RB', x: 75, y: 55, rating: 83, name: 'DEFENDER 2' },
+        { position: 'CM', x: 50, y: 38, rating: 85, name: 'MIDFIELDER' },
+        { position: 'LW', x: 32, y: 20, rating: 86, name: 'WINGER 1' },
+        { position: 'RW', x: 68, y: 20, rating: 87, name: 'WINGER 2' }
     ],
     '1-1-2-2': [
-        { position: 'GK', x: 50, y: 90, rating: 85, name: 'KEEPER' },
-        { position: 'CB', x: 50, y: 70, rating: 84, name: 'DEFENDER' },
-        { position: 'LM', x: 30, y: 50, rating: 83, name: 'MIDFIELDER 1' },
-        { position: 'RM', x: 70, y: 50, rating: 84, name: 'MIDFIELDER 2' },
-        { position: 'LS', x: 35, y: 15, rating: 87, name: 'STRIKER 1' },
-        { position: 'RS', x: 65, y: 15, rating: 88, name: 'STRIKER 2' }
+        { position: 'GK', x: 50, y: 72, rating: 85, name: 'KEEPER' },
+        { position: 'CB', x: 50, y: 55, rating: 84, name: 'DEFENDER' },
+        { position: 'LM', x: 30, y: 42, rating: 83, name: 'MIDFIELDER 1' },
+        { position: 'RM', x: 70, y: 42, rating: 84, name: 'MIDFIELDER 2' },
+        { position: 'LS', x: 35, y: 20, rating: 87, name: 'STRIKER 1' },
+        { position: 'RS', x: 65, y: 20, rating: 88, name: 'STRIKER 2' }
     ]
 };
 
@@ -58,7 +58,7 @@ class SoundEffects {
             error: this.createSound(200, 400, 'sawtooth')
         };
     }
-    
+
     createSound(frequency, duration, type = 'sine') {
         return () => {
             try {
@@ -66,16 +66,16 @@ class SoundEffects {
                 const ctx = new AudioContext();
                 const oscillator = ctx.createOscillator();
                 const gainNode = ctx.createGain();
-                
+
                 oscillator.type = type;
                 oscillator.frequency.value = frequency;
-                
+
                 gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration / 1000);
-                
+
                 oscillator.connect(gainNode);
                 gainNode.connect(ctx.destination);
-                
+
                 oscillator.start(ctx.currentTime);
                 oscillator.stop(ctx.currentTime + duration / 1000);
             } catch (e) {
@@ -83,7 +83,7 @@ class SoundEffects {
             }
         };
     }
-    
+
     play(soundName) {
         if (this.sounds[soundName]) {
             this.sounds[soundName]();
@@ -119,7 +119,7 @@ const playerCountEl = document.getElementById('playerCount');
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     console.log('✅ Formation Planner: Page loaded');
-    
+
     initializeFormation();
     setupEventListeners();
     updateRatings();
@@ -132,7 +132,7 @@ function setupEventListeners() {
     formationSelect.addEventListener('change', (e) => {
         currentFormation = e.target.value;
         currentFormationEl.textContent = currentFormation;
-        
+
         // Reposition existing players to new formation
         repositionPlayersToFormation();
     });
@@ -142,7 +142,7 @@ function setupEventListeners() {
             initializeFormation();
         }
     });
-    
+
     saveFormationBtn.addEventListener('click', saveFormation);
     exportBtn.addEventListener('click', exportFormation);
     reloadCardsBtn.addEventListener('click', loadPlayerCards);
@@ -165,28 +165,28 @@ function setupEventListeners() {
 function repositionPlayersToFormation() {
     const existingCards = document.querySelectorAll('.player-card-on-field.fifa-card');
     const formationPositions = formations[currentFormation] || [];
-    
+
     console.log(`🔄 Repositioning ${existingCards.length} players to ${currentFormation} formation`);
-    
+
     existingCards.forEach((card, index) => {
         if (index < formationPositions.length) {
             const position = formationPositions[index];
-            
+
             // Animate to new position (using calc to center the cards)
             card.style.transition = 'left 0.5s ease, top 0.5s ease';
-            card.style.left = `calc(${position.x}% - 55px)`; // 55px = half of card width
-            card.style.top = `calc(${position.y}% - 55px)`;  // 55px = half of card height
-            
+            card.style.left = `calc(${position.x}% - 65px)`; // 65px = half of card width (130px)
+            card.style.top = `calc(${position.y}% - 65px)`;  // 65px = half of card height
+
             // Remove transition after animation
             setTimeout(() => {
                 card.style.transition = '';
             }, 500);
         }
     });
-    
+
     // Play success sound
     soundFX.play('success');
-    
+
     // Show feedback
     if (existingCards.length > 0) {
         showFormationChangeFeedback();
@@ -223,10 +223,10 @@ function showFormationChangeFeedback() {
 function initializeFormation() {
     playersOnField.innerHTML = '';
     players = [];
-    
+
     updateRatings();
     updatePlayerCount();
-    
+
     // Auto-load random players on initialization
     loadRandomPlayers();
 }
@@ -237,20 +237,20 @@ async function loadRandomPlayers() {
         console.log('🎲 Loading random players...');
         const response = await fetch('/api/random-players?count=6');
         const data = await response.json();
-        
+
         if (data.success && data.cards.length > 0) {
             console.log(`✅ Loaded ${data.cards.length} random players`);
-            
+
             // Place players in current formation positions
             const positions = formations[currentFormation] || [];
-            
+
             data.cards.forEach((card, index) => {
                 if (index < positions.length && card.metadata) {
                     const pos = positions[index];
                     createFIFACardOnField(card.imageData, pos.x, pos.y, card.metadata);
                 }
             });
-            
+
             console.log('✅ Random players placed on field');
         }
     } catch (error) {
@@ -264,7 +264,7 @@ function handleDragOver(e) {
         e.preventDefault();
     }
     e.dataTransfer.dropEffect = 'copy';
-    
+
     showDropZoneHighlight(e);
     return false;
 }
@@ -274,19 +274,19 @@ function showDropZoneHighlight(e) {
     const rect = playersOnField.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
-    
+
     // Remove existing highlight
     const existingHighlight = document.querySelector('.drop-zone-highlight');
     if (existingHighlight) {
         existingHighlight.remove();
     }
-    
+
     // Create new highlight
     const highlight = document.createElement('div');
     highlight.className = 'drop-zone-highlight';
     highlight.style.left = `${x}%`;
     highlight.style.top = `${y}%`;
-    
+
     playersOnField.appendChild(highlight);
 }
 
@@ -333,8 +333,8 @@ function isSlotOccupied(targetX, targetY) {
         // Extract percentage from calc() values
         const leftValue = card.style.left;
         const topValue = card.style.top;
-        
-        // Parse calc(X% - 55px) to get X
+
+        // Parse calc(X% - 65px) to get X
         const cardX = parseFloat(leftValue.match(/(\d+(?:\.\d+)?)%/)?.[1] || 0);
         const cardY = parseFloat(topValue.match(/(\d+(?:\.\d+)?)%/)?.[1] || 0);
 
@@ -353,10 +353,10 @@ function handleDrop(e) {
         e.stopPropagation();
     }
     e.preventDefault();
-    
+
     playersOnField.classList.remove('drag-over');
     removeDropZoneHighlight();
-    
+
     // 1. Calculate drop coordinates
     const rect = playersOnField.getBoundingClientRect();
     let x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -364,60 +364,60 @@ function handleDrop(e) {
 
     // 2. Snap to slot
     const snappedSlot = findNearestEmptySlot(x, y);
-    
+
     if (snappedSlot) {
         console.log(`🧲 Snapped to slot: ${snappedSlot.position}`);
         x = snappedSlot.x;
         y = snappedSlot.y;
     }
-    
+
     // Check for repositioning
     const isRepositioning = e.dataTransfer.getData('isRepositioning');
     console.log('🔍 Checking for repositioning:', isRepositioning);
     console.log('🔍 Dragged element:', draggedElement);
-    
+
     if (isRepositioning === 'true' && draggedElement && draggedElement.classList.contains('player-card-on-field')) {
         console.log('✅ Repositioning confirmed - moving player');
         soundFX.play('success');
-        
+
         draggedElement.style.transition = 'left 0.3s ease, top 0.3s ease';
-        draggedElement.style.left = `calc(${x}% - 55px)`; // Center the card properly
-        draggedElement.style.top = `calc(${y}% - 55px)`;
-        
+        draggedElement.style.left = `calc(${x}% - 65px)`; // Center the card properly (130px / 2)
+        draggedElement.style.top = `calc(${y}% - 65px)`;
+
         // Update metadata position if snapped
-        if(snappedSlot) {
+        if (snappedSlot) {
             draggedElement.dataset.position = snappedSlot.position;
             console.log('🎯 Snapped to position:', snappedSlot.position);
         }
 
         showRepositionFeedback();
-        
+
         setTimeout(() => {
             if (draggedElement) {
                 draggedElement.style.transition = '';
             }
         }, 300);
-        
+
         draggedElement.classList.remove('dragging');
         draggedElement = null;
-        
+
         updateRatingsWithFIFACards();
         return false;
     }
-    
+
     // Handle new card from sidebar
     const cardImage = e.dataTransfer.getData('cardImage');
     const metadataStr = e.dataTransfer.getData('metadata');
-    
+
     if (cardImage) {
         let metadata = null;
         if (metadataStr) {
             try {
                 metadata = JSON.parse(metadataStr);
-                
+
                 // Update position in metadata if snapped
                 if (snappedSlot) {
-                    metadata.position = snappedSlot.position; 
+                    metadata.position = snappedSlot.position;
                 }
 
                 if (isPlayerAlreadyOnField(metadata.name)) {
@@ -429,23 +429,23 @@ function handleDrop(e) {
                 console.error('❌ Error parsing metadata:', err);
             }
         }
-        
+
         soundFX.play('drop');
         createFIFACardOnField(cardImage, x, y, metadata);
-        
+
         if (draggedElement) {
             draggedElement.classList.remove('dragging');
             draggedElement = null;
         }
-    } 
-    
+    }
+
     return false;
 }
 
 // Update Ratings with FIFA Cards
 function updateRatingsWithFIFACards() {
     const fifaCards = document.querySelectorAll('.player-card-on-field.fifa-card');
-    
+
     if (fifaCards.length === 0) {
         overallRatingEl.textContent = '--';
         attackRatingEl.textContent = '--';
@@ -453,20 +453,20 @@ function updateRatingsWithFIFACards() {
         midfieldRatingEl.textContent = '--';
         paceRatingEl.textContent = '--';
         chemistryValueEl.textContent = '--';
-        
+
         document.querySelectorAll('.stat-fill')[0].style.width = '0%';
         document.querySelectorAll('.stat-fill')[1].style.width = '0%';
         document.querySelectorAll('.stat-fill')[2].style.width = '0%';
         document.querySelectorAll('.stat-fill')[3].style.width = '0%';
         document.querySelector('.chemistry-fill').style.width = '0%';
-        
+
         return;
     }
-    
+
     let totalRating = 0, totalPace = 0, totalShooting = 0;
     let totalPassing = 0, totalDribbling = 0, totalDefense = 0, totalPhysical = 0;
     let validCards = 0;
-    
+
     fifaCards.forEach(card => {
         const rating = parseInt(card.dataset.rating) || 0;
         const pace = parseInt(card.dataset.pace) || 0;
@@ -475,7 +475,7 @@ function updateRatingsWithFIFACards() {
         const dribbling = parseInt(card.dataset.dribbling) || 0;
         const defense = parseInt(card.dataset.defense) || 0;
         const physical = parseInt(card.dataset.physical) || 0;
-        
+
         if (rating > 0) {
             totalRating += rating;
             totalPace += pace;
@@ -487,44 +487,44 @@ function updateRatingsWithFIFACards() {
             validCards++;
         }
     });
-    
+
     if (validCards === 0) {
         overallRatingEl.textContent = '--';
         return;
     }
-    
+
     // Calculate averages
     const overall = Math.round(totalRating / validCards);
     const paceRating = Math.round(totalPace / validCards);
     const attackRating = Math.round((totalPace + totalShooting + totalDribbling) / (validCards * 3));
     const defenseRating = Math.round((totalDefense + totalPhysical) / (validCards * 2));
     const midfieldRating = Math.round((totalPassing + totalDribbling) / (validCards * 2));
-    
+
     // Update text displays with animation
     overallRatingEl.textContent = overall;
     attackRatingEl.textContent = attackRating;
     defenseRatingEl.textContent = defenseRating;
     midfieldRatingEl.textContent = midfieldRating;
     paceRatingEl.textContent = paceRating;
-    
+
     // Add animation class
     [overallRatingEl, attackRatingEl, defenseRatingEl, midfieldRatingEl, paceRatingEl].forEach(el => {
         el.classList.add('updating');
         setTimeout(() => el.classList.remove('updating'), 600);
     });
-    
+
     // Update stat bars
     const statFills = document.querySelectorAll('.stat-fill');
     statFills[0].style.width = `${attackRating}%`;
     statFills[1].style.width = `${defenseRating}%`;
     statFills[2].style.width = `${midfieldRating}%`;
     statFills[3].style.width = `${paceRating}%`;
-    
+
     // Calculate chemistry
     const chemistry = Math.round((validCards / 6) * 100);
     chemistryValueEl.textContent = chemistry;
     document.querySelector('.chemistry-fill').style.width = `${chemistry}%`;
-    
+
     // Update player count
     playerCountEl.textContent = `${validCards}/6`;
 }
@@ -548,7 +548,7 @@ function saveFormation() {
         players: players.filter(p => p !== null),
         timestamp: new Date().toISOString()
     };
-    
+
     localStorage.setItem('fifa_formation', JSON.stringify(formationData));
     soundFX.play('success');
     alert('Formation saved successfully! ✅');
@@ -558,25 +558,35 @@ function saveFormation() {
 async function exportFormation() {
     console.log('🚀 Starting formation export...');
     soundFX.play('success');
-    
+
     // Show loading overlay
     const loadingOverlay = showLoadingOverlay('🎨 Generating formation image...');
-    
+
     try {
         // Check if there are any cards on the field
         const cardsOnField = document.querySelectorAll('.player-card-on-field.fifa-card');
         console.log(`📊 Found ${cardsOnField.length} cards on field`);
-        
+
         if (cardsOnField.length === 0) {
             loadingOverlay.remove();
             alert('⚠️ No players on field to export! Add some players first.');
             return;
         }
-        
+
         // Create a temporary export container with fixed positioning
         console.log('📦 Creating export container...');
         const exportContainer = await createExportContainer();
-          // Load html2canvas dynamically if not available
+
+        // Append to body
+        document.body.appendChild(exportContainer);
+
+        // Make it visible temporarily for capture
+        exportContainer.style.opacity = '1';
+
+        // Wait a bit for rendering
+        await new Promise(resolve => setTimeout(resolve, 200));
+
+        // Load html2canvas dynamically if not available
         const loadHtml2Canvas = () => {
             return new Promise((resolve) => {
                 if (typeof window.html2canvas !== 'undefined') {
@@ -588,8 +598,8 @@ async function exportFormation() {
                     document.head.appendChild(script);
                 }
             });
-        };        const html2canvasLib = await loadHtml2Canvas();        // Capture the export container with optimized settings
-        console.log('📸 Starting html2canvas capture...');        
+        }; const html2canvasLib = await loadHtml2Canvas();        // Capture the export container with optimized settings
+        console.log('📸 Starting html2canvas capture...');
         const canvas = await html2canvasLib(exportContainer, {
             backgroundColor: '#1a1a2e',
             scale: 2,
@@ -606,7 +616,7 @@ async function exportFormation() {
             removeContainer: false,
             async: true,
             imageTimeout: 30000,
-            onclone: function(clonedDoc) {
+            onclone: function (clonedDoc) {
                 console.log('🔄 HTML2Canvas cloned document');
                 // Ensure all elements in clone are visible and properly styled
                 const allElements = clonedDoc.querySelectorAll('*');
@@ -620,7 +630,7 @@ async function exportFormation() {
                         }
                     }
                 });
-                
+
                 // Ensure SVG elements are properly styled
                 const svgElements = clonedDoc.querySelectorAll('svg, svg *');
                 svgElements.forEach(el => {
@@ -635,20 +645,20 @@ async function exportFormation() {
 
         // Clean up the temporary container
         exportContainer.remove();
-        
+
         // Check if canvas is empty (fallback to direct field capture)
         const ctx = canvas.getContext('2d');
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const isEmpty = imageData.data.every((value, index) => index % 4 === 3 ? true : value === 0);
-          if (isEmpty) {
+        if (isEmpty) {
             console.log('⚠️ Canvas appears empty, trying direct field capture...');
             loadingOverlay.remove();
             return exportFormationDirect();
         }
-          // Remove loading overlay and show image preview
+        // Remove loading overlay and show image preview
         loadingOverlay.remove();
         showImagePreview(canvas);
-        
+
     } catch (error) {
         loadingOverlay.remove();
         console.error('Export error:', error);
@@ -661,17 +671,19 @@ async function createExportContainer() {
     const exportContainer = document.createElement('div');
     exportContainer.style.cssText = `
         position: fixed;
-        top: -10000px;
+        top: 0;
         left: 0;
         width: 1200px;
         height: 800px;
         background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
         border-radius: 20px;
-        z-index: 9999;
+        z-index: 99999;
         font-family: 'Cairo', sans-serif;
         overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
     `;
-      // Add enhanced header with formation info
+    // Add enhanced header with formation info
     const header = document.createElement('div');
     header.style.cssText = `
         position: absolute;
@@ -687,7 +699,7 @@ async function createExportContainer() {
         z-index: 30;
         box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     `;
-    
+
     header.innerHTML = `
         <div style="text-align: center;">
             <h1 style="color: #ffffff; font-size: 36px; font-weight: 900; margin: 0; text-shadow: 3px 3px 6px rgba(0,0,0,0.8); letter-spacing: 1px;">
@@ -698,7 +710,7 @@ async function createExportContainer() {
             </p>
         </div>
     `;
-      // Add main field container with enhanced styling
+    // Add main field container with enhanced styling
     const fieldContainer = document.createElement('div');
     fieldContainer.style.cssText = `
         position: absolute;
@@ -715,7 +727,7 @@ async function createExportContainer() {
         justify-content: center;
         box-shadow: inset 0 4px 20px rgba(0,0,0,0.3), 0 8px 25px rgba(0,0,0,0.4);
     `;
-    
+
     // Create custom stadium field using your SVG data
     const stadiumField = document.createElement('div');
     stadiumField.style.cssText = `
@@ -726,7 +738,7 @@ async function createExportContainer() {
         position: relative;
         overflow: hidden;
     `;
-      // Load and use your custom stadium field SVG from assets/field-bg.svg
+    // Load and use your custom stadium field SVG from assets/field-bg.svg
     stadiumField.innerHTML = `
         <svg style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;" viewBox="0 0 904 650" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M903 649.439H1L120.311 1H783.788L903 649.439Z" fill="#1a472a" stroke="#4CAF50" stroke-width="2" stroke-miterlimit="10"/>
@@ -740,104 +752,65 @@ async function createExportContainer() {
             <path d="M556.362 556.642H352.353L348.43 649.238H560.453L556.362 556.642Z" stroke="#4CAF50" stroke-width="2" stroke-miterlimit="10"/>
         </svg>
     `;
-    
+
     fieldContainer.appendChild(stadiumField);
     exportContainer.appendChild(header);
     exportContainer.appendChild(fieldContainer);
-    
-    // Clone and reposition player cards with professional name labels
+
+    // Clone and reposition player cards - NO labels, cards inside field
     const playerCards = document.querySelectorAll('.player-card-on-field.fifa-card');
     console.log(`📋 Found ${playerCards.length} player cards to export`);
-    
+
     for (const card of playerCards) {
-        const metadata = card.dataset.metadata ? JSON.parse(card.dataset.metadata) : null;
-        
         // Calculate position relative to the stadium field (900x600)
         const leftValue = card.style.left;
         const topValue = card.style.top;
-        
+
         const xPercent = parseFloat(leftValue.match(/(\d+(?:\.\d+)?)%/)?.[1] || 50);
         const yPercent = parseFloat(topValue.match(/(\d+(?:\.\d+)?)%/)?.[1] || 50);
-        
-        // Convert to absolute pixels for stadium field (900x600)
-        const absoluteX = (xPercent / 100) * 900 - 65; // 65px = half card width
-        const absoluteY = (yPercent / 100) * 600 - 65; // 65px = half card height
-        
+
+        // Convert to absolute pixels - adjusted to keep cards INSIDE field
+        // Field is 900x600, card is 100px wide
+        const cardWidth = 100;
+        const cardHeight = 140;
+
+        // Calculate position with proper margins to stay inside field
+        let absoluteX = (xPercent / 100) * 900 - (cardWidth / 2);
+        let absoluteY = (yPercent / 100) * 600 - (cardHeight / 2);
+
+        // Clamp positions to keep cards inside the field
+        absoluteX = Math.max(10, Math.min(absoluteX, 900 - cardWidth - 10));
+        absoluteY = Math.max(10, Math.min(absoluteY, 600 - cardHeight - 10));
+
         console.log(`📍 Card position: ${xPercent}%, ${yPercent}% -> ${absoluteX}px, ${absoluteY}px`);
-        
-        // Create professional card container
+
+        // Create card container - just the card, no label
         const cardContainer = document.createElement('div');
         cardContainer.style.cssText = `
             position: absolute;
             left: ${absoluteX}px;
             top: ${absoluteY}px;
-            width: 130px;
-            height: 160px;
             z-index: 25;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         `;
-          // Create card image with enhanced shadows and professional styling
+
+        // Create card image
         const cardImg = card.querySelector('img');
         if (cardImg) {
             const imgClone = cardImg.cloneNode(true);
             imgClone.style.cssText = `
-                width: 120px;
+                width: ${cardWidth}px;
                 height: auto;
-                border-radius: 12px;
-                box-shadow: 0 8px 25px rgba(0,0,0,0.8), 0 3px 10px rgba(0,0,0,0.4);
-                border: 3px solid rgba(255,255,255,0.1);
-                filter: brightness(1.15) contrast(1.1) saturate(1.1);
-                transform: translateZ(0);
+                border-radius: 8px;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+                filter: brightness(1.1) contrast(1.05);
             `;
             cardContainer.appendChild(imgClone);
         }
-          // Create professional player name label (like Image 1)
-        const nameLabel = document.createElement('div');
-        nameLabel.style.cssText = `
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(30, 30, 30, 0.95));
-            color: white;
-            padding: 10px 18px;
-            border-radius: 25px;
-            font-size: 13px;
-            font-weight: 800;
-            margin-top: 15px;
-            text-align: center;
-            min-width: 110px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            letter-spacing: 0.5px;
-        `;
-        
-        if (metadata && metadata.name) {
-            nameLabel.innerHTML = `
-                <div style="color: #ffffff; font-size: 13px; font-weight: 700; margin-bottom: 2px;">
-                    ${metadata.name.toUpperCase()}
-                </div>
-                <div style="color: #cbd5e0; font-size: 10px; font-weight: 500;">
-                    ${metadata.position || 'SUB'} • OVR ${metadata.overall || '0'}
-                </div>
-            `;
-        } else {
-            nameLabel.innerHTML = `
-                <div style="color: #ffffff; font-size: 13px; font-weight: 700;">
-                    PLAYER
-                </div>
-                <div style="color: #cbd5e0; font-size: 10px;">
-                    SUB • OVR 0
-                </div>
-            `;
-        }
-        
-        cardContainer.appendChild(nameLabel);
+
         stadiumField.appendChild(cardContainer);
-        
-        console.log('✅ Professional card with name label added');
+        console.log('✅ Card added to export (no label)');
     }
-      // Add enhanced footer with team statistics
+    // Add enhanced footer with team statistics
     const footer = document.createElement('div');
     footer.style.cssText = `
         position: absolute;
@@ -855,10 +828,10 @@ async function createExportContainer() {
         box-shadow: 0 6px 25px rgba(0,0,0,0.7), inset 0 2px 0 rgba(255,255,255,0.1);
         backdrop-filter: blur(15px);
     `;
-    
+
     const playerCount = document.querySelectorAll('.player-card-on-field.fifa-card').length;
     const overallRating = document.getElementById('overallRating')?.textContent || '--';
-    
+
     footer.innerHTML = `
         <div style="display: flex; align-items: center; gap: 40px;">
             <div style="color: white; font-size: 18px; font-weight: 800; letter-spacing: 0.5px;">
@@ -872,13 +845,13 @@ async function createExportContainer() {
             🏟️ FIFA Formation Planner
         </div>
     `;
-    
+
     exportContainer.appendChild(footer);
     document.body.appendChild(exportContainer);
-      // Wait for images to load in the cloned container
+    // Wait for images to load in the cloned container
     const images = exportContainer.querySelectorAll('img');
     console.log(`🖼️ Waiting for ${images.length} images to load...`);
-    
+
     // Enhanced image loading with crossOrigin support
     await Promise.all(Array.from(images).map(img => {
         return new Promise((resolve) => {
@@ -888,7 +861,7 @@ async function createExportContainer() {
             } else {
                 // Set crossOrigin to handle CORS issues
                 img.crossOrigin = 'anonymous';
-                
+
                 img.onload = () => {
                     console.log('✅ Image loaded:', img.src);
                     resolve();
@@ -905,13 +878,13 @@ async function createExportContainer() {
                         console.log('❌ Image completely failed to load:', img.src);
                         resolve(); // Continue even if image fails to load
                     };
-                    
+
                     // Force reload
                     const src = img.src;
                     img.src = '';
                     img.src = src;
                 };
-                
+
                 // Force reload if not loaded
                 const src = img.src;
                 img.src = '';
@@ -919,12 +892,12 @@ async function createExportContainer() {
             }
         });
     }));
-    
+
     console.log('✅ All images processed, ready for export');
-    
+
     // Additional delay to ensure everything is rendered properly
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
     return exportContainer;
 }
 
@@ -946,7 +919,7 @@ function showLoadingOverlay(message) {
         justify-content: center;
         animation: fadeIn 0.3s ease;
     `;
-    
+
     const spinner = document.createElement('div');
     spinner.style.cssText = `
         width: 60px;
@@ -957,7 +930,7 @@ function showLoadingOverlay(message) {
         animation: spin 1s linear infinite;
         margin-bottom: 20px;
     `;
-    
+
     const text = document.createElement('div');
     text.textContent = message;
     text.style.cssText = `
@@ -967,11 +940,11 @@ function showLoadingOverlay(message) {
         font-weight: 600;
         text-align: center;
     `;
-    
+
     overlay.appendChild(spinner);
     overlay.appendChild(text);
     document.body.appendChild(overlay);
-    
+
     // Add CSS animation keyframes
     if (!document.querySelector('#loading-animations')) {
         const style = document.createElement('style');
@@ -984,7 +957,7 @@ function showLoadingOverlay(message) {
         `;
         document.head.appendChild(style);
     }
-    
+
     return overlay;
 }
 
@@ -1044,7 +1017,7 @@ function showRepositionFeedback() {
 function showImagePreview(canvas) {
     // Convert canvas to image URL
     const imageUrl = canvas.toDataURL('image/png');
-    
+
     // Create modal overlay
     const modal = document.createElement('div');
     modal.className = 'image-preview-modal';
@@ -1062,7 +1035,7 @@ function showImagePreview(canvas) {
         justify-content: center;
         animation: fadeIn 0.3s ease;
     `;
-    
+
     // Create preview container
     const previewContainer = document.createElement('div');
     previewContainer.style.cssText = `
@@ -1075,7 +1048,7 @@ function showImagePreview(canvas) {
         display: flex;
         flex-direction: column;
     `;
-    
+
     // Create header
     const header = document.createElement('div');
     header.style.cssText = `
@@ -1091,7 +1064,7 @@ function showImagePreview(canvas) {
         <div>🏟️ FIFA Formation Preview</div>
         <div style="font-size: 14px; opacity: 0.8; margin-top: 5px;">Formation: ${currentFormation}</div>
     `;
-    
+
     // Create image container
     const imageContainer = document.createElement('div');
     imageContainer.style.cssText = `
@@ -1101,7 +1074,7 @@ function showImagePreview(canvas) {
         align-items: center;
         background: #f8fafc;
     `;
-    
+
     // Create preview image
     const previewImage = document.createElement('img');
     previewImage.src = imageUrl;
@@ -1111,7 +1084,7 @@ function showImagePreview(canvas) {
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     `;
-    
+
     // Create buttons container
     const buttonsContainer = document.createElement('div');
     buttonsContainer.style.cssText = `
@@ -1122,7 +1095,7 @@ function showImagePreview(canvas) {
         background: #f8fafc;
         border-top: 1px solid #e2e8f0;
     `;
-    
+
     // Create download button
     const downloadBtn = document.createElement('button');
     downloadBtn.innerHTML = '📥 Download Image';
@@ -1139,17 +1112,17 @@ function showImagePreview(canvas) {
         transition: all 0.3s ease;
         box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
     `;
-    
+
     downloadBtn.onmouseover = () => {
         downloadBtn.style.transform = 'translateY(-2px)';
         downloadBtn.style.boxShadow = '0 6px 16px rgba(16, 185, 129, 0.4)';
     };
-    
+
     downloadBtn.onmouseout = () => {
         downloadBtn.style.transform = 'translateY(0)';
         downloadBtn.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)';
     };
-      downloadBtn.onclick = () => {
+    downloadBtn.onclick = () => {
         try {
             // Enhanced download with error handling
             canvas.toBlob((blob) => {
@@ -1158,18 +1131,18 @@ function showImagePreview(canvas) {
                     alert('❌ Failed to create image. Please try again.');
                     return;
                 }
-                
+
                 try {
                     const url = URL.createObjectURL(blob);
                     const link = document.createElement('a');
                     link.href = url;
-                    link.download = `FIFA-Formation-${currentFormation}-${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.png`;
+                    link.download = `FIFA-Formation-${currentFormation}-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.png`;
                     link.style.display = 'none';
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
                     URL.revokeObjectURL(url);
-                    
+
                     showDownloadFeedback();
                     console.log('✅ Image downloaded successfully');
                 } catch (downloadError) {
@@ -1181,10 +1154,10 @@ function showImagePreview(canvas) {
             console.error('Canvas to blob error:', error);
             alert('❌ Failed to process image. Please try again.');
         }
-        
+
         modal.remove();
     };
-    
+
     // Create close button
     const closeBtn = document.createElement('button');
     closeBtn.innerHTML = '✖️ Close';
@@ -1200,20 +1173,20 @@ function showImagePreview(canvas) {
         cursor: pointer;
         transition: all 0.3s ease;
     `;
-    
+
     closeBtn.onmouseover = () => {
         closeBtn.style.transform = 'translateY(-2px)';
     };
-    
+
     closeBtn.onmouseout = () => {
         closeBtn.style.transform = 'translateY(0)';
     };
-    
+
     closeBtn.onclick = () => {
         modal.style.animation = 'fadeOut 0.3s ease';
         setTimeout(() => modal.remove(), 300);
     };
-    
+
     // Create share button (optional)
     const shareBtn = document.createElement('button');
     shareBtn.innerHTML = '📤 Share';
@@ -1229,15 +1202,15 @@ function showImagePreview(canvas) {
         cursor: pointer;
         transition: all 0.3s ease;
     `;
-    
+
     shareBtn.onmouseover = () => {
         shareBtn.style.transform = 'translateY(-2px)';
     };
-    
+
     shareBtn.onmouseout = () => {
         shareBtn.style.transform = 'translateY(0)';
     };
-    
+
     shareBtn.onclick = () => {
         // Copy image to clipboard if supported
         if (navigator.clipboard && canvas.toBlob) {
@@ -1254,7 +1227,7 @@ function showImagePreview(canvas) {
             alert('📋 Share feature not supported in this browser. Use download instead.');
         }
     };
-    
+
     // Assemble the modal
     imageContainer.appendChild(previewImage);
     buttonsContainer.appendChild(downloadBtn);
@@ -1264,7 +1237,7 @@ function showImagePreview(canvas) {
     previewContainer.appendChild(imageContainer);
     previewContainer.appendChild(buttonsContainer);
     modal.appendChild(previewContainer);
-    
+
     // Add close on background click
     modal.onclick = (e) => {
         if (e.target === modal) {
@@ -1272,7 +1245,7 @@ function showImagePreview(canvas) {
             setTimeout(() => modal.remove(), 300);
         }
     };
-    
+
     // Add keyboard support
     document.addEventListener('keydown', function escHandler(e) {
         if (e.key === 'Escape') {
@@ -1281,10 +1254,10 @@ function showImagePreview(canvas) {
             document.removeEventListener('keydown', escHandler);
         }
     });
-    
+
     // Add to DOM with fade in animation
     document.body.appendChild(modal);
-    
+
     console.log('🖼️ Image preview modal displayed');
 }
 
@@ -1293,40 +1266,40 @@ function showImagePreview(canvas) {
 // Load Player Cards from Card Creator
 async function loadPlayerCards() {
     const container = availableCards;
-    
+
     container.classList.add('loading');
     container.innerHTML = '<div class="loading-spinner">Loading your FIFA cards...</div>';
-    
+
     try {
         const response = await fetch(`${API_URL}/get-cards`);
         const data = await response.json();
-        
+
         if (data.success && data.cards.length > 0) {
             container.classList.remove('loading');
             container.innerHTML = '';
-            
+
             data.cards.forEach((card, index) => {
                 const cardElement = document.createElement('div');
                 cardElement.className = 'fifa-card-mini';
                 cardElement.draggable = true;
                 cardElement.dataset.cardIndex = index;
                 cardElement.dataset.cardImage = card.imageData;
-                
+
                 if (card.metadata) {
                     cardElement.dataset.metadata = JSON.stringify(card.metadata);
                 }
-                
+
                 cardElement.innerHTML = `<img src="${card.imageData}" alt="FIFA Card" />`;
-                
+
                 // Add drag events
                 cardElement.addEventListener('dragstart', handleCardDragStart);
                 cardElement.addEventListener('dragend', handleCardDragEnd);
-                
+
                 container.appendChild(cardElement);
             });
-            
+
             updateSidebarCardStates();
-            
+
         } else {
             container.classList.remove('loading');
             container.innerHTML = `
@@ -1356,32 +1329,32 @@ async function loadPlayerCards() {
 function handleCardDragStart(e) {
     console.log('🎮 Drag started!');
     const cardElement = e.target.closest('.fifa-card-mini');
-    
+
     if (cardElement.dataset.metadata) {
         try {
             const metadata = JSON.parse(cardElement.dataset.metadata);
             if (isPlayerAlreadyOnField(metadata.name)) {
                 e.preventDefault();
                 console.log('⚠️ Cannot drag - player already on field:', metadata.name);
-                
+
                 cardElement.style.animation = 'shake 0.5s';
                 setTimeout(() => {
                     cardElement.style.animation = '';
                 }, 500);
-                
+
                 return false;
             }
         } catch (err) {
             console.error('Error checking duplicate:', err);
         }
     }
-    
+
     draggedElement = cardElement;
     cardElement.classList.add('dragging');
-    
+
     e.dataTransfer.effectAllowed = 'copy';
     e.dataTransfer.setData('cardImage', cardElement.dataset.cardImage);
-    
+
     if (cardElement.dataset.metadata) {
         e.dataTransfer.setData('metadata', cardElement.dataset.metadata);
     }
@@ -1402,7 +1375,7 @@ function createFIFACardOnField(imageData, x, y, metadata = null) {
     cardElement.className = 'player-card-on-field fifa-card';
     cardElement.draggable = true;
     cardElement.dataset.playerId = `fifa_${Date.now()}`;
-    
+
     if (metadata) {
         cardElement.dataset.metadata = JSON.stringify(metadata);
         cardElement.dataset.name = metadata.name || 'Unknown';
@@ -1415,7 +1388,7 @@ function createFIFACardOnField(imageData, x, y, metadata = null) {
         cardElement.dataset.physical = metadata.phy || 0;
         cardElement.dataset.position = metadata.position || 'SUB';
     }
-    
+
     let playerInfoHTML = '';
     if (metadata) {
         playerInfoHTML = `
@@ -1428,59 +1401,59 @@ function createFIFACardOnField(imageData, x, y, metadata = null) {
             </div>
         `;
     }
-    
+
     cardElement.innerHTML = `
         <img src="${imageData}" alt="FIFA Player Card" />
         ${playerInfoHTML}
         <button class="remove-player" onclick="removeFIFACard(this)">×</button>
     `;
-    
+
     // Position the card (convert percentage to pixel position accounting for card size)
-    cardElement.style.left = `calc(${x}% - 55px)`; // 55px = half of card width (110px)
-    cardElement.style.top = `calc(${y}% - 55px)`;  // 55px = half of card height (approx)
+    cardElement.style.left = `calc(${x}% - 65px)`; // 65px = half of card width (130px)
+    cardElement.style.top = `calc(${y}% - 65px)`;  // 65px = half of card height (approx)
     cardElement.style.transform = 'none';
-    
+
     // Add hover sound
     cardElement.addEventListener('mouseenter', () => {
         soundFX.play('hover');
     });
-    
+
     // Add drag events for repositioning
     cardElement.addEventListener('dragstart', (e) => {
         console.log('🔄 Repositioning drag started for:', metadata?.name || 'Unknown player');
         draggedElement = cardElement;
         cardElement.classList.add('dragging');
         e.dataTransfer.effectAllowed = 'move';
-        
+
         e.dataTransfer.setData('isRepositioning', 'true');
         e.dataTransfer.setData('cardId', cardElement.dataset.playerId);
-        
+
         if (metadata) {
             e.dataTransfer.setData('metadata', JSON.stringify(metadata));
         }
-        
+
         console.log('✅ Drag data set successfully');
     });
-    
+
     cardElement.addEventListener('dragend', () => {
         console.log('🏁 Repositioning drag ended');
         cardElement.classList.remove('dragging');
         draggedElement = null;
     });
-    
+
     cardElement.addEventListener('mousedown', () => {
         console.log('👆 Mouse down on card:', metadata?.name || 'Unknown');
     });
-    
+
     playersOnField.appendChild(cardElement);
-    
+
     console.log('🎯 Card created and drag events attached:', {
         draggable: cardElement.draggable,
         className: cardElement.className,
         playerId: cardElement.dataset.playerId,
         playerName: metadata?.name || 'Unknown'
     });
-    
+
     updateRatingsWithFIFACards();
     updatePlayerCount();
     updateSidebarCardStates();
@@ -1491,11 +1464,11 @@ function removeFIFACard(button) {
     const card = button.closest('.player-card-on-field');
     if (card) {
         soundFX.play('remove');
-        
+
         card.style.transition = 'opacity 0.2s, transform 0.2s';
         card.style.opacity = '0';
         card.style.transform = 'scale(0.8)';
-        
+
         setTimeout(() => {
             card.remove();
             updateRatingsWithFIFACards();
@@ -1508,7 +1481,7 @@ function removeFIFACard(button) {
 // Check if player already exists on field
 function isPlayerAlreadyOnField(playerName) {
     const cardsOnField = document.querySelectorAll('.player-card-on-field.fifa-card');
-    
+
     for (const card of cardsOnField) {
         const metadataStr = card.dataset.metadata;
         if (metadataStr) {
@@ -1522,27 +1495,27 @@ function isPlayerAlreadyOnField(playerName) {
             }
         }
     }
-    
+
     return false;
 }
 
 // Update sidebar cards to show which are already on field
 function updateSidebarCardStates() {
     const sidebarCards = document.querySelectorAll('.fifa-card-mini');
-    
+
     sidebarCards.forEach(card => {
         const metadataStr = card.dataset.metadata;
         if (metadataStr) {
             try {
                 const metadata = JSON.parse(metadataStr);
                 const isOnField = isPlayerAlreadyOnField(metadata.name);
-                
+
                 if (isOnField) {
                     card.classList.add('on-field');
                     card.style.opacity = '0.5';
                     card.style.filter = 'grayscale(70%)';
                     card.style.cursor = 'not-allowed';
-                    
+
                     if (!card.querySelector('.on-field-badge')) {
                         const badge = document.createElement('div');
                         badge.className = 'on-field-badge';
@@ -1554,7 +1527,7 @@ function updateSidebarCardStates() {
                     card.style.opacity = '1';
                     card.style.filter = 'none';
                     card.style.cursor = 'grab';
-                    
+
                     const badge = card.querySelector('.on-field-badge');
                     if (badge) {
                         badge.remove();
@@ -1592,10 +1565,10 @@ document.addEventListener('keydown', (e) => {
 // Fallback export method - capture field directly
 async function exportFormationDirect() {
     console.log('🎯 Using direct field capture method...');
-    
+
     // Show loading overlay
     const loadingOverlay = showLoadingOverlay('🎨 Generating formation image...');
-    
+
     try {
         const loadHtml2Canvas = () => {
             return new Promise((resolve) => {
@@ -1611,11 +1584,18 @@ async function exportFormationDirect() {
         };
 
         const html2canvasLib = await loadHtml2Canvas();
-        
+
         // Create professional export container (same as main export)
         const exportContainer = await createExportContainer();
-        
-        console.log('📸 Capturing export container...');        const canvas = await html2canvasLib(exportContainer, {
+
+        // Append to body and make visible for capture
+        document.body.appendChild(exportContainer);
+        exportContainer.style.opacity = '1';
+
+        // Wait for rendering
+        await new Promise(resolve => setTimeout(resolve, 200));
+
+        console.log('📸 Capturing export container...'); const canvas = await html2canvasLib(exportContainer, {
             backgroundColor: '#1a1a2e',
             scale: 2,
             useCORS: true,
@@ -1626,7 +1606,7 @@ async function exportFormationDirect() {
             foreignObjectRendering: true,
             removeContainer: false,
             imageTimeout: 30000,
-            onclone: function(clonedDoc) {
+            onclone: function (clonedDoc) {
                 console.log('🔄 Direct capture - HTML2Canvas cloned document');
                 // Ensure all elements are visible and properly styled
                 const allElements = clonedDoc.querySelectorAll('*');
@@ -1639,7 +1619,7 @@ async function exportFormationDirect() {
                         }
                     }
                 });
-                
+
                 // Ensure SVG elements are properly styled
                 const svgElements = clonedDoc.querySelectorAll('svg, svg *');
                 svgElements.forEach(el => {
@@ -1650,15 +1630,15 @@ async function exportFormationDirect() {
                 });
             }
         });
-        
+
         // Clean up
         exportContainer.remove();
-        
+
         console.log('✅ Direct canvas captured successfully');
-        
+
         // Remove loading overlay and show image preview
         loadingOverlay.remove();
-        showImagePreview(canvas);        
+        showImagePreview(canvas);
     } catch (error) {
         loadingOverlay.remove();
         console.error('Direct export error:', error);
@@ -1671,7 +1651,7 @@ function debugExport() {
     const cards = document.querySelectorAll('.player-card-on-field.fifa-card');
     console.log('🔍 Debug Export Info:');
     console.log(`- Found ${cards.length} cards on field`);
-    
+
     cards.forEach((card, index) => {
         const img = card.querySelector('img');
         console.log(`Card ${index + 1}:`);

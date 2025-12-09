@@ -1,195 +1,1586 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>    <meta charset="UTF-8">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FIFA Formation Planner</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <link rel="apple-touch-icon" sizes="180x180" href="logo.svg">
-    
-    <link rel="stylesheet" href="formation.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1f2e 0%, #0f1419 100%);
+            padding: 20px 40px;
+            border-bottom: 2px solid #7c3aed;
+            box-shadow: 0 8px 32px rgba(124, 58, 237, 0.1);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #7c3aed, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .formation-selector {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .formation-selector label {
+            font-weight: 600;
+            color: #fbbf24;
+        }
+
+        .formation-dropdown {
+            padding: 10px 15px;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid #7c3aed;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .formation-dropdown:hover {
+            background: rgba(124, 58, 237, 0.3);
+            border-color: #fbbf24;
+        }
+
+        /* Main Layout */
+        .main-content {
+            max-width: 1600px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .planner-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr 320px;
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* Cards Panel */
+        .cards-panel {
+            background: rgba(31, 41, 55, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            height: 600px;
+            overflow-y: auto;
+            position: sticky;
+            top: 20px;
+        }
+
+        .cards-panel::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .cards-panel::-webkit-scrollbar-track {
+            background: rgba(124, 58, 237, 0.1);
+            border-radius: 10px;
+        }
+
+        .cards-panel::-webkit-scrollbar-thumb {
+            background: #7c3aed;
+            border-radius: 10px;
+        }
+
+        .panel-header {
+            margin-bottom: 24px;
+        }
+
+        .panel-header h3 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Modern Badge Style - Like the image */
+        .panel-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(251, 191, 36, 0.1) 100%);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.15),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .panel-badge:hover {
+            border-color: rgba(251, 191, 36, 0.5);
+            box-shadow: 0 6px 24px rgba(124, 58, 237, 0.25),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .panel-badge-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+        }
+
+        .panel-badge-text {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+        }
+
+        /* Card count badge */
+        .card-count-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-left: auto;
+            box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);
+        }
+
+        .available-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        /* Card Item Wrapper */
+        .card-item-wrapper {
+            position: relative;
+            background: rgba(31, 41, 55, 0.6);
+            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .card-item-wrapper:hover {
+            background: rgba(124, 58, 237, 0.15);
+            border-color: rgba(251, 191, 36, 0.4);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        /* On Field Badge */
+        .on-field-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+            z-index: 10;
+        }
+
+        .on-field-badge::before {
+            content: '✓';
+        }
+
+        /* Stat badges on cards */
+        .stat-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.4);
+            color: #fbbf24;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .stat-badge.position {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            color: #fff;
+            border: none;
+        }
+
+        .stat-badge.rating {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #1a1f2e;
+            border: none;
+            font-weight: 900;
+        }
+
+        /* Created Card Styles - Shows the actual generated card image */
+        .created-card {
+            position: relative;
+            width: 170px;
+            height: 240px;
+            margin: 0 auto;
+            cursor: grab;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+        }
+
+        .created-card:hover {
+            transform: scale(1.05) translateY(-5px);
+            filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
+        }
+
+        .created-card-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .created-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        /* FIFA Card Design - Using Real Card Backgrounds */
+        .fifa-card {
+            position: relative;
+            width: 170px;
+            height: 240px;
+            margin: 0 auto;
+            cursor: grab;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+        }
+
+        .fifa-card:hover {
+            transform: scale(1.05) translateY(-5px);
+            filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
+        }
+
+        .fifa-card:active {
+            cursor: grabbing;
+        }
+
+        .fifa-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Card Types - Real FIFA Card Backgrounds */
+        .fifa-card.rare_gold .fifa-card-inner {
+            background-image: url('/assets/19/cards/rare_gold.png');
+        }
+        
+        .fifa-card.common_gold .fifa-card-inner {
+            background-image: url('/assets/19/cards/common_gold.png');
+        }
+        
+        .fifa-card.rare_silver .fifa-card-inner {
+            background-image: url('/assets/19/cards/rare_silver.png');
+        }
+        
+        .fifa-card.common_silver .fifa-card-inner {
+            background-image: url('/assets/19/cards/common_silver.png');
+        }
+        
+        .fifa-card.rare_bronze .fifa-card-inner {
+            background-image: url('/assets/19/cards/rare_bronze.png');
+        }
+        
+        .fifa-card.common_bronze .fifa-card-inner {
+            background-image: url('/assets/19/cards/common_bronze.png');
+        }
+        
+        .fifa-card.toty .fifa-card-inner {
+            background-image: url('/assets/19/cards/toty.png');
+        }
+        
+        .fifa-card.if_gold .fifa-card-inner {
+            background-image: url('/assets/19/cards/if_gold.png');
+        }
+        
+        .fifa-card.if_silver .fifa-card-inner {
+            background-image: url('/assets/19/cards/if_silver.png');
+        }
+        
+        .fifa-card.if_bronze .fifa-card-inner {
+            background-image: url('/assets/19/cards/if_bronze.png');
+        }
+        
+        .fifa-card.legend .fifa-card-inner {
+            background-image: url('/assets/19/cards/legend.png');
+        }
+        
+        .fifa-card.hero .fifa-card-inner {
+            background-image: url('/assets/19/cards/hero.png');
+        }
+        
+        .fifa-card.motm .fifa-card-inner {
+            background-image: url('/assets/19/cards/motm.png');
+        }
+        
+        .fifa-card.otw .fifa-card-inner {
+            background-image: url('/assets/19/cards/otw.png');
+        }
+        
+        .fifa-card.futties .fifa-card-inner {
+            background-image: url('/assets/19/cards/futties.png');
+        }
+        
+        .fifa-card.ucl_rare .fifa-card-inner {
+            background-image: url('/assets/19/cards/ucl_rare.png');
+        }
+        
+        .fifa-card.ucl_common .fifa-card-inner {
+            background-image: url('/assets/19/cards/ucl_common.png');
+        }
+        
+        .fifa-card.ucl_live .fifa-card-inner {
+            background-image: url('/assets/19/cards/ucl_live.png');
+        }
+        
+        .fifa-card.future_stars .fifa-card-inner {
+            background-image: url('/assets/19/cards/future_stars.png');
+        }
+        
+        .fifa-card.headliners .fifa-card-inner {
+            background-image: url('/assets/19/cards/headliners.png');
+        }
+        
+        .fifa-card.flashback .fifa-card-inner {
+            background-image: url('/assets/19/cards/flashback.png');
+        }
+        
+        .fifa-card.record_breaker .fifa-card-inner {
+            background-image: url('/assets/19/cards/record_breaker.png');
+        }
+        
+        .fifa-card.sbc .fifa-card-inner {
+            background-image: url('/assets/19/cards/sbc.png');
+        }
+        
+        .fifa-card.potm_pl .fifa-card-inner {
+            background-image: url('/assets/19/cards/potm_pl.png');
+        }
+        
+        .fifa-card.europa_league .fifa-card-inner {
+            background-image: url('/assets/19/cards/europa_league.png');
+        }
+        
+        .fifa-card.carniball .fifa-card-inner {
+            background-image: url('/assets/19/cards/carniball.png');
+        }
+        
+        .fifa-card.award_winner .fifa-card-inner {
+            background-image: url('/assets/19/cards/award_winner.png');
+        }
+        
+        .fifa-card.champion_gold .fifa-card-inner {
+            background-image: url('/assets/19/cards/champion_gold.png');
+        }
+
+        /* Card text colors based on card type */
+        /* Dark cards (TOTY, IF, UCL, etc.) use white/gold text */
+        .fifa-card.toty .card-rating,
+        .fifa-card.toty .card-position,
+        .fifa-card.toty .card-name,
+        .fifa-card.toty .stat-value,
+        .fifa-card.toty .stat-label {
+            color: #ffd700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .fifa-card.if_gold .card-rating,
+        .fifa-card.if_gold .card-position,
+        .fifa-card.if_gold .card-name,
+        .fifa-card.if_gold .stat-value,
+        .fifa-card.if_gold .stat-label,
+        .fifa-card.if_silver .card-rating,
+        .fifa-card.if_silver .card-position,
+        .fifa-card.if_silver .card-name,
+        .fifa-card.if_silver .stat-value,
+        .fifa-card.if_silver .stat-label,
+        .fifa-card.if_bronze .card-rating,
+        .fifa-card.if_bronze .card-position,
+        .fifa-card.if_bronze .card-name,
+        .fifa-card.if_bronze .stat-value,
+        .fifa-card.if_bronze .stat-label {
+            color: #ffd700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .fifa-card.ucl_rare .card-rating,
+        .fifa-card.ucl_rare .card-position,
+        .fifa-card.ucl_rare .card-name,
+        .fifa-card.ucl_rare .stat-value,
+        .fifa-card.ucl_rare .stat-label,
+        .fifa-card.ucl_common .card-rating,
+        .fifa-card.ucl_common .card-position,
+        .fifa-card.ucl_common .card-name,
+        .fifa-card.ucl_common .stat-value,
+        .fifa-card.ucl_common .stat-label,
+        .fifa-card.ucl_live .card-rating,
+        .fifa-card.ucl_live .card-position,
+        .fifa-card.ucl_live .card-name,
+        .fifa-card.ucl_live .stat-value,
+        .fifa-card.ucl_live .stat-label {
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .fifa-card.motm .card-rating,
+        .fifa-card.motm .card-position,
+        .fifa-card.motm .card-name,
+        .fifa-card.motm .stat-value,
+        .fifa-card.motm .stat-label {
+            color: #00cfff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .fifa-card.hero .card-rating,
+        .fifa-card.hero .card-position,
+        .fifa-card.hero .card-name,
+        .fifa-card.hero .stat-value,
+        .fifa-card.hero .stat-label {
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .fifa-card.future_stars .card-rating,
+        .fifa-card.future_stars .card-position,
+        .fifa-card.future_stars .card-name,
+        .fifa-card.future_stars .stat-value,
+        .fifa-card.future_stars .stat-label {
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .fifa-card.headliners .card-rating,
+        .fifa-card.headliners .card-position,
+        .fifa-card.headliners .card-name,
+        .fifa-card.headliners .stat-value,
+        .fifa-card.headliners .stat-label {
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .fifa-card.flashback .card-rating,
+        .fifa-card.flashback .card-position,
+        .fifa-card.flashback .card-name,
+        .fifa-card.flashback .stat-value,
+        .fifa-card.flashback .stat-label {
+            color: #e0115f;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .fifa-card.legend .card-rating,
+        .fifa-card.legend .card-position,
+        .fifa-card.legend .card-name,
+        .fifa-card.legend .stat-value,
+        .fifa-card.legend .stat-label {
+            color: #1a1a1a;
+        }
+
+        /* Fallback gradient styles */
+        .fifa-card.gold .fifa-card-inner {
+            background-image: url('/assets/19/cards/rare_gold.png');
+        }
+        
+        .fifa-card.silver .fifa-card-inner {
+            background-image: url('/assets/19/cards/rare_silver.png');
+        }
+        
+        .fifa-card.blue .fifa-card-inner {
+            background-image: url('/assets/19/cards/toty.png');
+        }
+        
+        .fifa-card.purple .fifa-card-inner {
+            background-image: url('/assets/19/cards/hero.png');
+        }
+
+        .fifa-card-header {
+            position: absolute;
+            top: 14%;
+            left: 10%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+            line-height: 1;
+            width: 26%;
+        }
+
+        .card-info-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+            width: 100%;
+        }
+
+        .card-rating {
+            font-size: 24px;
+            font-weight: 900;
+            color: #3d2c1a;
+            text-shadow: none;
+            line-height: 1;
+        }
+
+        .card-position {
+            font-size: 11px;
+            font-weight: 800;
+            color: #3d2c1a;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+            line-height: 1;
+        }
+
+        .card-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            align-items: center;
+            margin-top: 6px;
+        }
+
+        .card-nation {
+            width: 22px;
+            height: 14px;
+            object-fit: cover;
+            border-radius: 1px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .card-club {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+        }
+
+        /* Player photo container - positioned for the card cutout */
+        .card-image-container {
+            position: absolute;
+            left: 50%;
+            top: 28%;
+            transform: translate(-40%, -30%);
+            width: 75px;
+            height: 80px;
+            overflow: hidden;
+            background: transparent;
+            z-index: 1;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            background: transparent;
+        }
+
+        /* Player name - positioned at 54% from top */
+        .card-name {
+            position: absolute;
+            top: 54%;
+            left: 0;
+            right: 0;
+            padding: 0 10px;
+            font-size: 11px;
+            font-weight: 900;
+            color: #3d2c1a;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 2;
+        }
+
+        /* Stats section - positioned at bottom */
+        .card-stats {
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 75%;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 10px;
+            z-index: 2;
+        }
+
+        .stat-col {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .stat {
+            display: flex;
+            gap: 3px;
+            align-items: center;
+            color: #3d2c1a;
+        }
+
+        .stat-value {
+            font-weight: 900;
+            font-size: 12px;
+            color: #3d2c1a;
+            min-width: 16px;
+            text-align: right;
+        }
+
+        .stat-label {
+            font-size: 9px;
+            font-weight: 600;
+            color: #3d2c1a;
+            opacity: 0.9;
+        }
+
+        .stat-divider {
+            width: 1px;
+            background: rgba(61, 44, 26, 0.3);
+            margin: 0 5px;
+        }
+
+        /* Card bottom - hidden since using real images */
+        .card-bottom {
+            display: none;
+        }
+
+        /* Field Container - FIFA Ultimate Team Style */
+        .field-container {
+            background: linear-gradient(145deg, #0a0e14 0%, #111827 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        .field {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1.1;
+            background: 
+                /* Grass stripes effect */
+                repeating-linear-gradient(
+                    180deg,
+                    #2d8a3e 0px,
+                    #2d8a3e 40px,
+                    #258a36 40px,
+                    #258a36 80px
+                );
+            border: 3px solid rgba(255, 255, 255, 0.95);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 
+                inset 0 0 60px rgba(0, 0, 0, 0.25),
+                0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Remove the CSS pseudo-element lines, use SVG only */
+        .field::before {
+            display: none;
+        }
+
+        .field svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .players-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .player-on-field {
+            position: absolute;
+            width: 75px;
+            height: 110px;
+            cursor: grab;
+            transition: all 0.2s ease;
+        }
+
+        .player-on-field:active {
+            cursor: grabbing;
+            z-index: 100;
+        }
+
+        .player-on-field:hover {
+            transform: scale(1.15);
+            z-index: 50;
+        }
+
+        .player-on-field .fifa-card {
+            width: 100%;
+            height: 100%;
+        }
+
+        .player-on-field .fifa-card-inner {
+            border-radius: 10px;
+        }
+
+        .player-on-field .remove-btn {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border: 2px solid #fff;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 101;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.5);
+        }
+
+        .player-on-field:hover .remove-btn {
+            display: flex;
+        }
+
+        .remove-btn:hover {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            transform: scale(1.15);
+        }
+
+        /* Stats Panel */
+        .stats-panel {
+            background: rgba(31, 41, 55, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            height: 600px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .overall-rating {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .rating-circle {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, #7c3aed, #fbbf24);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 900;
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(124, 58, 237, 0.3);
+        }
+
+        .rating-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fbbf24;
+        }
+
+        .stats-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+        }
+
+        .stat-item-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #d1d5db;
+        }
+
+        .stat-item-value {
+            font-size: 16px;
+            font-weight: 900;
+            color: #fbbf24;
+        }
+
+        .player-count {
+            text-align: center;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(251, 191, 36, 0.1) 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .player-count::before {
+            content: '👥';
+            font-size: 18px;
+        }
+
+        .player-count strong {
+            font-size: 20px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #10b981, #059669);
+            width: 100%;
+        }
+
+        .btn-save:hover {
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .planner-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cards-panel,
+            .stats-panel {
+                position: static;
+                height: auto;
+            }
+        }
+
+        .placeholder-text {
+            text-align: center;
+            color: #9ca3af;
+            padding: 40px 20px;
+        }
+
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
-        <div class="container-fluid">
-            <div class="header-content">                <div class="logo">
-                    <img src="logo.svg" alt="FIFA Logo" class="logo-image">
-                    <div class="logo-text">
-                        <h1>FIFA Formation Planner</h1>
-                        <p>Build Your Dream Team</p>
-                    </div>
-                </div>
-                
-                <div class="formation-selector">
-                    <label for="formationSelect">
-                        <i class="fa-solid fa-clipboard-list"></i>
-                        Formation:
-                    </label>
-                    <select id="formationSelect" class="formation-dropdown">
-                        <option value="1-2-2-1">1-2-2-1 (Balanced)</option>
-                        <option value="1-3-1-1">1-3-1-1 (Defensive)</option>
-                        <option value="1-1-3-1">1-1-3-1 (Attacking)</option>
-                        <option value="1-2-1-2">1-2-1-2 (Wide)</option>
-                        <option value="1-1-2-2">1-1-2-2 (Offensive)</option>
-                    </select>
-                </div>
-
-                <nav class="nav">
-                    <a href="index.html" class="nav-link">
-                        <i class="fa-solid fa-id-card-clip"></i> Card Creator
-                    </a>
-                </nav>
+        <div class="header-content">
+            <div class="logo">
+                <h1>⚽ FIFA Formation Planner</h1>
+            </div>
+            <div class="formation-selector">
+                <label for="formation">Formation:</label>
+                <select id="formation" class="formation-dropdown">
+                    <option value="1-2-2-1">1-2-2-1 (Balanced)</option>
+                    <option value="1-3-1-1">1-3-1-1 (Defensive)</option>
+                    <option value="1-1-3-1">1-1-3-1 (Attacking)</option>
+                    <option value="1-2-1-2">1-2-1-2 (Wide)</option>
+                </select>
             </div>
         </div>
     </header>
 
+    <!-- Main Content -->
     <main class="main-content">
-        <div class="container-fluid">
-            <div class="planner-grid">
-                  <div class="quick-actions-sidebar">
-                    <button class="icon-btn" id="saveFormationBtn" title="Save Formation">
-                        <i class="fa-solid fa-floppy-disk"></i>
-                    </button>
-                    <button class="icon-btn" id="exportBtn" title="Download Image">
-                        <i class="fa-solid fa-camera"></i>
-                    </button>
-                    <button class="icon-btn" id="resetBtn" title="Reset Field">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                    <button class="icon-btn" id="reloadCardsBtn" title="Refresh Cards">
-                        <i class="fa-solid fa-rotate"></i>
-                    </button>
-                </div>
-
-                <aside class="cards-panel">
-                    <div class="panel-header">
-                        <h3>
-                            <i class="fa-solid fa-layer-group"></i>
-                            My Cards
-                        </h3>
+        <div class="planner-grid">
+            <!-- Cards Panel -->
+            <div class="cards-panel">
+                <div class="panel-header">
+                    <div class="panel-badge">
+                        <div class="panel-badge-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <span class="panel-badge-text">My Cards</span>
                     </div>
-                    <div class="cards-content">
-                        <div id="availableCards" class="available-cards">
-                            <p class="placeholder-text">                                     
-                                <i class="fa-solid fa-spinner fa-spin"></i> Loading cards...
-                            </p>         
-                        </div>        
-                    </div>             
-                </aside>                                              
+                    <span class="card-count-badge" id="cardCount">0</span>
+                </div>
+                <div class="available-cards" id="cardsContainer">
+                    <p class="placeholder-text"><i class="fas fa-spinner fa-spin"></i> Loading cards...</p>
+                </div>
+            </div>
 
-                <div class="field-container">
-                    <div class="field-wrapper">
-                        <svg class="field-bg" viewBox="0 0 904 650" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M903 649.439H1L120.311 1H783.788L903 649.439Z" fill="#1a472a" stroke="#2d5a3a" stroke-width="2" stroke-miterlimit="10"/>
-                            <path d="M69.8843 275.038H834.169" stroke="#2d5a3a" stroke-width="2" stroke-miterlimit="10"/>
-                            <path d="M550.992 275.425C553.194 321.703 508.921 360.763 452.019 360.763C395.117 360.763 350.853 321.703 353.062 275.425C355.172 231.123 399.452 196.564 452.035 196.564C504.618 196.564 548.89 231.115 550.992 275.425Z" stroke="#2d5a3a" stroke-width="2" stroke-miterlimit="10"/>
-                            <path d="M541.288 71.4008C543.078 109.009 503.086 140.632 451.897 140.632C400.708 140.632 360.732 109.017 362.53 71.4008C364.259 35.2446 404.251 6.93591 451.92 6.93591C499.582 6.93591 539.574 35.2446 541.288 71.4008Z" stroke="#2d5a3a" stroke-width="2" stroke-miterlimit="10"/>
-                            <path d="M269.125 96.4996H640.093L630.663 1.1532H278.312L269.125 96.4996Z" fill="#1a472a" stroke="#2d5a3a" stroke-width="2" stroke-miterlimit="10"/>
-                            <path d="M371.922 54.7625H532.542L530.219 1.13715H374.245L371.922 54.7625Z" stroke="#2d5a3a" stroke-width="2" stroke-miterlimit="10"/>
-                            <path d="M343.464 530.333C346.061 474.554 395.78 431.261 454.624 431.261C513.469 431.261 563.279 474.554 565.998 530.333C568.855 588.91 519.151 638.6 454.853 638.6C390.554 638.6 340.737 588.91 343.471 530.333H343.464Z" stroke="#2d5a3a" stroke-width="2" stroke-miterlimit="10"/>
-                            <path d="M675.597 492.572H227.26L211.911 649.198H690.84L675.597 492.572Z" fill="#1a472a" stroke="#2d5a3a" stroke-width="2" stroke-miterlimit="10"/>
-                            <path d="M556.362 556.642H352.353L348.43 649.238H560.453L556.362 556.642Z" stroke="#2d5a3a" stroke-width="2" stroke-miterlimit="10"/>
-                        </svg>
+            <!-- Field -->
+            <div class="field-container">
+                <div class="field" id="field">
+                    <svg viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Center line -->
+                        <line x1="0" y1="55" x2="100" y2="55" stroke="rgba(255,255,255,0.85)" stroke-width="0.4"/>
                         
-                        <div class="players-on-field" id="playersOnField">
-                            </div>
+                        <!-- Center circle -->
+                        <circle cx="50" cy="55" r="9" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="0.4"/>
+                        <!-- Center spot -->
+                        <circle cx="50" cy="55" r="0.8" fill="rgba(255,255,255,0.9)"/>
+                        
+                        <!-- TOP: Penalty area (18 yard box) -->
+                        <rect x="20" y="0" width="60" height="16" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="0.4"/>
+                        <!-- TOP: Goal area (6 yard box) -->
+                        <rect x="34" y="0" width="32" height="6" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="0.4"/>
+                        <!-- TOP: Penalty spot -->
+                        <circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.9)"/>
+                        <!-- TOP: Penalty arc -->
+                        <path d="M 38 16 A 7 7 0 0 0 62 16" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="0.4"/>
+                        
+                        <!-- BOTTOM: Penalty area (18 yard box) -->
+                        <rect x="20" y="94" width="60" height="16" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="0.4"/>
+                        <!-- BOTTOM: Goal area (6 yard box) -->
+                        <rect x="34" y="104" width="32" height="6" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="0.4"/>
+                        <!-- BOTTOM: Penalty spot -->
+                        <circle cx="50" cy="100" r="0.5" fill="rgba(255,255,255,0.9)"/>
+                        <!-- BOTTOM: Penalty arc -->
+                        <path d="M 38 94 A 7 7 0 0 1 62 94" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="0.4"/>
+                        
+                        <!-- Corner arcs -->
+                        <path d="M 0 2 A 2 2 0 0 0 2 0" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="0.3"/>
+                        <path d="M 98 0 A 2 2 0 0 0 100 2" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="0.3"/>
+                        <path d="M 0 108 A 2 2 0 0 1 2 110" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="0.3"/>
+                        <path d="M 98 110 A 2 2 0 0 1 100 108" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="0.3"/>
+                    </svg>
+                    <div class="players-container" id="playersContainer"></div>
+                </div>
+            </div>
+
+            <!-- Stats Panel -->
+            <div class="stats-panel">
+                <div class="panel-header">
+                    <div class="panel-badge">
+                        <div class="panel-badge-icon">
+                            <i class="fas fa-chart-simple"></i>
+                        </div>
+                        <span class="panel-badge-text">Team Stats</span>
+                    </div>
+                </div>
+                
+                <div class="overall-rating">
+                    <div class="rating-circle" id="overallRating">--</div>
+                    <div class="rating-label">OVERALL</div>
+                </div>
+
+                <div class="stats-list">
+                    <div class="stat-item">
+                        <span class="stat-item-label"><i class="fas fa-fire"></i> Attack</span>
+                        <span class="stat-item-value" id="attackStat">--</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-item-label"><i class="fas fa-shield"></i> Defense</span>
+                        <span class="stat-item-value" id="defenseStat">--</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-item-label"><i class="fas fa-person-running"></i> Pace</span>
+                        <span class="stat-item-value" id="paceStat">--</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-item-label"><i class="fas fa-dumbbell"></i> Physical</span>
+                        <span class="stat-item-value" id="physicalStat">--</span>
                     </div>
                 </div>
 
-                <aside class="rating-panel">
-                    <div class="panel-header">
-                        <h3>
-                            <i class="fa-solid fa-chart-simple"></i>
-                            Team Stats
-                        </h3>
-                    </div>
+                <div class="player-count">
+                    Players: <strong id="playerCount">0/6</strong>
+                </div>
 
-                    <div class="rating-content">
-                        <div class="overall-rating">
-                            <div class="rating-circle">
-                                <div class="rating-value" id="overallRating">--</div>
-                            </div>
-                            <div class="rating-label">OVR</div>
-                        </div>
-
-                        <div class="stats-breakdown">
-                            
-                            <div class="stat-row">
-                                <span class="stat-label"><i class="fa-solid fa-fire"></i> ATT</span>
-                                <div class="stat-bar">
-                                    <div class="stat-fill" style="width: 0%"></div>
-                                </div>
-                                <span class="stat-value" id="attackRating">--</span>
-                            </div>
-
-                            <div class="stat-row">
-                                <span class="stat-label"><i class="fa-solid fa-shield-halved"></i> DEF</span>
-                                <div class="stat-bar">
-                                    <div class="stat-fill" style="width: 0%"></div>
-                                </div>
-                                <span class="stat-value" id="defenseRating">--</span>
-                            </div>
-
-                            <div class="stat-row">
-                                <span class="stat-label"><i class="fa-solid fa-link"></i> MID</span>
-                                <div class="stat-bar">
-                                    <div class="stat-fill" style="width: 0%"></div>
-                                </div>
-                                <span class="stat-value" id="midfieldRating">--</span>
-                            </div>
-
-                            <div class="stat-row">
-                                <span class="stat-label"><i class="fa-solid fa-person-running"></i> PAC</span>
-                                <div class="stat-bar">
-                                    <div class="stat-fill" style="width: 0%"></div>
-                                </div>
-                                <span class="stat-value" id="paceRating">--</span>
-                            </div>
-                        </div>
-
-                        <div class="chemistry-section">
-                            <h4><i class="fa-solid fa-flask"></i> Chemistry</h4>
-                            <div class="chemistry-value">
-                                <span class="chemistry-number" id="chemistryValue">--</span>
-                                <span class="chemistry-max">/100</span>
-                            </div>
-                            <div class="chemistry-bar">
-                                <div class="chemistry-fill" style="width: 0%"></div>
-                            </div>
-                        </div>
-
-                        <div class="formation-info">
-                            <div class="info-row">
-                                <span><i class="fa-solid fa-users-line"></i> Style:</span>
-                                <strong id="currentFormation">1-2-2-1</strong>
-                            </div>
-                            <div class="info-row">
-                                <span><i class="fa-solid fa-user-group"></i> Squad:</span>
-                                <strong id="playerCount">0/6</strong>
-                            </div>
-                        </div>
-                    </div>
-                </aside>
-
+                <div class="action-buttons">
+                    <button class="btn" onclick="clearField()">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                    <button class="btn" onclick="randomTeam()">
+                        <i class="fas fa-shuffle"></i> Random
+                    </button>
+                </div>
+                <div class="action-buttons" style="margin-top: 10px;">
+                    <button class="btn btn-save" onclick="saveFormation()">
+                        <i class="fas fa-camera"></i> Save Formation
+                    </button>
+                </div>
             </div>
         </div>
     </main>
 
-    <template id="playerCardTemplate">
-        <div class="player-card-on-field" draggable="true">
-            <div class="card-badge">
-                <div class="badge-rating"></div>
-                <div class="badge-position"></div>
-            </div>
-            <div class="card-name"></div>
-            <button class="remove-player">×</button>
-        </div>
-    </template>
+    <script>
+        // Sample player data with real card types
+        const samplePlayers = [
+            { name: "Cristiano", rating: 93, position: "ST", pac: 89, sho: 94, pas: 82, dri: 87, def: 35, phy: 78, rarity: "rare_gold", nation: "pt", club: "al_nassr" },
+            { name: "Lewandowski", rating: 92, position: "ST", pac: 85, sho: 93, pas: 80, dri: 86, def: 38, phy: 82, rarity: "toty", nation: "pl", club: "barcelona" },
+            { name: "Mbappé", rating: 91, position: "LW", pac: 97, sho: 89, pas: 77, dri: 92, def: 36, phy: 76, rarity: "future_stars", nation: "fr", club: "real_madrid" },
+            { name: "Vinícius Jr", rating: 90, position: "LW", pac: 96, sho: 85, pas: 75, dri: 91, def: 34, phy: 73, rarity: "headliners", nation: "br", club: "real_madrid" },
+            { name: "Iniesta", rating: 89, position: "CM", pac: 75, sho: 72, pas: 91, dri: 90, def: 61, phy: 64, rarity: "legend", nation: "es", club: "vissel_kobe" },
+            { name: "De Bruyne", rating: 91, position: "CM", pac: 85, sho: 86, pas: 93, dri: 87, def: 61, phy: 78, rarity: "if_gold", nation: "be", club: "man_city" },
+            { name: "Van Dijk", rating: 89, position: "CB", pac: 78, sho: 45, pas: 72, dri: 70, def: 92, phy: 88, rarity: "ucl_live", nation: "nl", club: "liverpool" },
+            { name: "Ramos", rating: 88, position: "CB", pac: 72, sho: 40, pas: 68, dri: 65, def: 91, phy: 89, rarity: "hero", nation: "es", club: "sevilla" },
+            { name: "Neuer", rating: 90, position: "GK", pac: 60, sho: 30, pas: 70, dri: 70, def: 85, phy: 79, rarity: "motm", nation: "de", club: "bayern" },
+            { name: "Messi", rating: 99, position: "RW", pac: 85, sho: 94, pas: 92, dri: 99, def: 38, phy: 68, rarity: "toty", nation: "ar", club: "inter_miami" },
+            { name: "Salah", rating: 90, position: "RW", pac: 93, sho: 87, pas: 81, dri: 90, def: 45, phy: 75, rarity: "flashback", nation: "eg", club: "liverpool" },
+        ];
 
-    <script src="formation.js"></script>
+        const formations = {
+            "1-2-2-1": [
+                { x: 50, y: 92 },   // GK (bas)
+                { x: 30, y: 72 }, { x: 70, y: 72 }, // DEF
+                { x: 25, y: 48 }, { x: 75, y: 48 }, // MID
+                { x: 50, y: 18 }  // ATT (haut)
+            ],
+            "1-3-1-1": [
+                { x: 50, y: 92 },
+                { x: 20, y: 68 }, { x: 50, y: 72 }, { x: 80, y: 68 },
+                { x: 50, y: 42 },
+                { x: 50, y: 15 }
+            ],
+            "1-1-3-1": [
+                { x: 50, y: 92 },
+                { x: 50, y: 72 },
+                { x: 20, y: 48 }, { x: 50, y: 44 }, { x: 80, y: 48 },
+                { x: 50, y: 15 }
+            ],
+            "1-2-1-2": [
+                { x: 50, y: 92 },
+                { x: 25, y: 68 }, { x: 75, y: 68 },
+                { x: 50, y: 44 },
+                { x: 30, y: 18 }, { x: 70, y: 18 }
+            ]
+        };
+
+        let playersOnField = [];
+        let draggedCard = null;
+        let allCards = []; // Store all cards (sample + created)
+
+        // Initialize
+        async function init() {
+            await loadCreatedCards();
+            populateCards();
+            setupFormationChange();
+        }
+
+        // Load created cards from API
+        async function loadCreatedCards() {
+            try {
+                const response = await fetch('/api/get-cards');
+                const data = await response.json();
+                
+                if (data.success && data.cards && data.cards.length > 0) {
+                    // Convert API cards to the format we need
+                    const createdCards = data.cards.map((card, index) => {
+                        const meta = card.metadata || {};
+                        return {
+                            name: meta.name || 'PLAYER',
+                            rating: meta.overall || 80,
+                            position: meta.position || 'ST',
+                            pac: meta.pac || 70,
+                            sho: meta.sho || 70,
+                            pas: meta.pas || 70,
+                            dri: meta.dri || 70,
+                            def: meta.def || 70,
+                            phy: meta.phy || 70,
+                            rarity: (meta.cardType || 'rare_gold').toLowerCase(),
+                            nation: meta.country || 'ar',
+                            club: meta.club || '',
+                            imageData: card.imageData, // The actual card image
+                            isCreated: true // Flag to identify created cards
+                        };
+                    });
+                    
+                    // Add created cards to the beginning
+                    allCards = [...createdCards, ...samplePlayers];
+                    console.log(`✅ Loaded ${createdCards.length} created cards`);
+                } else {
+                    allCards = [...samplePlayers];
+                }
+            } catch (error) {
+                console.log('Could not load created cards, using samples only:', error);
+                allCards = [...samplePlayers];
+            }
+        }
+
+        // Populate available cards
+        function populateCards() {
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = '';
+
+            allCards.forEach((player, index) => {
+                const card = createCardElement(player, index);
+                container.appendChild(card);
+            });
+            
+            // Update card count badge
+            updateCardCount();
+        }
+
+        // Update card count badge
+        function updateCardCount() {
+            const cardCountEl = document.getElementById('cardCount');
+            if (cardCountEl) {
+                cardCountEl.textContent = allCards.length;
+            }
+        }
+
+        // Create card element
+        function createCardElement(player, index) {
+            // Create wrapper for better styling
+            const wrapper = document.createElement('div');
+            wrapper.className = 'card-item-wrapper';
+            
+            const div = document.createElement('div');
+            div.draggable = true;
+            div.dataset.index = index;
+
+            // If this is a created card with image, show the actual card image
+            if (player.isCreated && player.imageData) {
+                div.className = 'fifa-card created-card';
+                div.innerHTML = `
+                    <div class="fifa-card-inner created-card-inner">
+                        <img src="${player.imageData}" alt="${player.name}" class="created-card-image">
+                    </div>
+                `;
+            } else {
+                // Show the template card with background image
+                div.className = `fifa-card ${player.rarity}`;
+                
+                // Get nation flag URL (using flagcdn.com for free flags)
+                const nationFlag = `https://flagcdn.com/w40/${player.nation || 'ar'}.png`;
+
+                div.innerHTML = `
+                    <div class="fifa-card-inner">
+                        <div class="fifa-card-header">
+                            <div class="card-info-left">
+                                <div class="card-rating">${player.rating}</div>
+                                <div class="card-position">${player.position}</div>
+                                <div class="card-badges">
+                                    <img class="card-nation" src="${nationFlag}" alt="${player.nation}" onerror="this.style.display='none'">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-image-container">
+                            <div class="card-image">👤</div>
+                        </div>
+                        <div class="card-name">${player.name}</div>
+                        <div class="card-stats">
+                            <div class="stat-col">
+                                <div class="stat"><span class="stat-value">${player.pac}</span><span class="stat-label">PAC</span></div>
+                                <div class="stat"><span class="stat-value">${player.sho}</span><span class="stat-label">SHO</span></div>
+                                <div class="stat"><span class="stat-value">${player.pas}</span><span class="stat-label">PAS</span></div>
+                            </div>
+                            <div class="stat-col">
+                                <div class="stat"><span class="stat-value">${player.dri}</span><span class="stat-label">DRI</span></div>
+                                <div class="stat"><span class="stat-value">${player.def}</span><span class="stat-label">DEF</span></div>
+                                <div class="stat"><span class="stat-value">${player.phy}</span><span class="stat-label">PHY</span></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            div.addEventListener('dragstart', (e) => {
+                draggedCard = { player, index };
+                div.style.opacity = '0.5';
+            });
+
+            div.addEventListener('dragend', () => {
+                div.style.opacity = '1';
+            });
+
+            wrapper.appendChild(div);
+            return wrapper;
+        }
+
+        // Field drop zone
+        const field = document.getElementById('field');
+        field.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            field.style.background = 'linear-gradient(to bottom, #1a472a 0%, #2d5a3a 100%)';
+        });
+
+        field.addEventListener('dragleave', () => {
+            field.style.background = 'linear-gradient(to bottom, #1a472a 0%, #0d3820 100%)';
+        });
+
+        field.addEventListener('drop', (e) => {
+            e.preventDefault();
+            field.style.background = 'linear-gradient(to bottom, #1a472a 0%, #0d3820 100%)';
+
+            if (!draggedCard) return;
+
+            const rect = field.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+            addPlayerToField(draggedCard.player, x, y);
+        });
+
+        // Add player to field
+        function addPlayerToField(player, x, y) {
+            const existing = playersOnField.find(p => p.name === player.name);
+            if (existing) return;
+
+            if (playersOnField.length >= 6) {
+                alert('Maximum 6 players on field');
+                return;
+            }
+
+            playersOnField.push(player);
+
+            const container = document.getElementById('playersContainer');
+            const playerDiv = document.createElement('div');
+            playerDiv.className = 'player-on-field';
+            playerDiv.style.left = x + '%';
+            playerDiv.style.top = y + '%';
+            playerDiv.style.transform = 'translate(-50%, -50%)';
+            playerDiv.dataset.playerName = player.name;
+
+            // Check if it's a created card with actual image
+            if (player.isCreated && player.imageData) {
+                playerDiv.innerHTML = `
+                    <div class="created-card" style="width: 70px; height: 100px;">
+                        <div class="created-card-inner">
+                            <img src="${player.imageData}" alt="${player.name}" class="created-card-image">
+                        </div>
+                    </div>
+                    <button class="remove-btn" onclick="removePlayer('${player.name}')">×</button>
+                `;
+            } else {
+                playerDiv.innerHTML = `
+                    <div class="fifa-card ${player.rarity}" style="width: 70px; height: 100px;">
+                        <div class="fifa-card-inner">
+                            <div class="fifa-card-header" style="padding: 8px 5px 0; top: 8%; left: 8%;">
+                                <div class="card-info-left">
+                                    <div class="card-rating" style="font-size: 12px;">${player.rating}</div>
+                                    <div class="card-position" style="font-size: 7px;">${player.position}</div>
+                                </div>
+                            </div>
+                            <div class="card-name" style="font-size: 6px; top: 52%;">${player.name}</div>
+                        </div>
+                    </div>
+                    <button class="remove-btn" onclick="removePlayer('${player.name}')">×</button>
+                `;
+            }
+
+            playerDiv.draggable = true;
+            playerDiv.addEventListener('dragstart', (e) => {
+                e.dataTransfer.effectAllowed = 'move';
+            });
+
+            playerDiv.addEventListener('dragend', (e) => {
+                const rect = field.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+                if (x >= 0 && x <= 100 && y >= 0 && y <= 100) {
+                    playerDiv.style.left = x + '%';
+                    playerDiv.style.top = y + '%';
+                }
+            });
+
+            container.appendChild(playerDiv);
+            updateStats();
+        }
+
+        // Remove player
+        function removePlayer(name) {
+            playersOnField = playersOnField.filter(p => p.name !== name);
+            document.querySelector(`[data-player-name="${name}"]`).remove();
+            updateStats();
+        }
+
+        // Update stats
+        function updateStats() {
+            const count = playersOnField.length;
+            document.getElementById('playerCount').textContent = `${count}/6`;
+
+            if (count === 0) {
+                document.getElementById('overallRating').textContent = '--';
+                document.getElementById('attackStat').textContent = '--';
+                document.getElementById('defenseStat').textContent = '--';
+                document.getElementById('paceStat').textContent = '--';
+                document.getElementById('physicalStat').textContent = '--';
+                return;
+            }
+
+            const overall = Math.round(playersOnField.reduce((sum, p) => sum + p.rating, 0) / count);
+            const attack = Math.round(playersOnField.reduce((sum, p) => sum + p.sho, 0) / count);
+            const defense = Math.round(playersOnField.reduce((sum, p) => sum + p.def, 0) / count);
+            const pace = Math.round(playersOnField.reduce((sum, p) => sum + p.pac, 0) / count);
+            const physical = Math.round(playersOnField.reduce((sum, p) => sum + p.phy, 0) / count);
+
+            document.getElementById('overallRating').textContent = overall;
+            document.getElementById('attackStat').textContent = attack;
+            document.getElementById('defenseStat').textContent = defense;
+            document.getElementById('paceStat').textContent = pace;
+            document.getElementById('physicalStat').textContent = physical;
+        }
+
+        // Clear field
+        function clearField() {
+            playersOnField = [];
+            document.getElementById('playersContainer').innerHTML = '';
+            updateStats();
+        }
+
+        // Save formation as image
+        function saveFormation() {
+            const field = document.getElementById('field');
+            const formation = document.getElementById('formation').value;
+            
+            // Show loading state
+            const saveBtn = document.querySelector('.btn-save');
+            const originalText = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            saveBtn.disabled = true;
+            
+            html2canvas(field, {
+                backgroundColor: null,
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                logging: false
+            }).then(canvas => {
+                // Create download link
+                const link = document.createElement('a');
+                const timestamp = Date.now();
+                link.download = `formation_${formation}_${timestamp}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                // Reset button
+                saveBtn.innerHTML = '<i class="fas fa-check"></i> Saved!';
+                setTimeout(() => {
+                    saveBtn.innerHTML = originalText;
+                    saveBtn.disabled = false;
+                }, 2000);
+            }).catch(err => {
+                console.error('Error saving formation:', err);
+                saveBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error';
+                setTimeout(() => {
+                    saveBtn.innerHTML = originalText;
+                    saveBtn.disabled = false;
+                }, 2000);
+            });
+        }
+
+        // Get position category based on player position
+        function getPositionCategory(position) {
+            const pos = (position || '').toUpperCase();
+            if (pos === 'GK') return 'GK';
+            if (['CB', 'LB', 'RB', 'LWB', 'RWB', 'SW'].includes(pos)) return 'DEF';
+            if (['CM', 'CDM', 'CAM', 'LM', 'RM', 'LW', 'RW'].includes(pos)) return 'MID';
+            if (['ST', 'CF', 'LF', 'RF'].includes(pos)) return 'ATT';
+            // Fallback based on stats
+            return 'MID';
+        }
+
+        // Random team - places players based on their position
+        function randomTeam() {
+            clearField();
+            
+            // Separate players by position category
+            const gk = allCards.filter(p => getPositionCategory(p.position) === 'GK');
+            const def = allCards.filter(p => getPositionCategory(p.position) === 'DEF');
+            const mid = allCards.filter(p => getPositionCategory(p.position) === 'MID');
+            const att = allCards.filter(p => getPositionCategory(p.position) === 'ATT');
+            
+            // Shuffle each category
+            const shuffleArray = arr => [...arr].sort(() => Math.random() - 0.5);
+            
+            const formation = formations[document.getElementById('formation').value];
+            const formationName = document.getElementById('formation').value;
+            
+            // Define position slots for each formation
+            // Format: [GK count, DEF count, MID count, ATT count]
+            let positionSlots;
+            switch(formationName) {
+                case '1-2-2-1':
+                    positionSlots = { gk: 1, def: 2, mid: 2, att: 1 };
+                    break;
+                case '1-3-1-1':
+                    positionSlots = { gk: 1, def: 3, mid: 1, att: 1 };
+                    break;
+                case '1-1-3-1':
+                    positionSlots = { gk: 1, def: 1, mid: 3, att: 1 };
+                    break;
+                case '1-2-1-2':
+                    positionSlots = { gk: 1, def: 2, mid: 1, att: 2 };
+                    break;
+                default:
+                    positionSlots = { gk: 1, def: 2, mid: 2, att: 1 };
+            }
+            
+            // Select players for each position
+            let selectedPlayers = [];
+            let positionIndex = 0;
+            
+            // GK (position 0)
+            const selectedGK = shuffleArray(gk).slice(0, positionSlots.gk);
+            if (selectedGK.length > 0) {
+                selectedPlayers.push({ player: selectedGK[0], posIndex: positionIndex });
+            }
+            positionIndex += positionSlots.gk;
+            
+            // DEF
+            const selectedDEF = shuffleArray(def).slice(0, positionSlots.def);
+            selectedDEF.forEach((p, i) => {
+                selectedPlayers.push({ player: p, posIndex: positionIndex + i });
+            });
+            positionIndex += positionSlots.def;
+            
+            // MID
+            const selectedMID = shuffleArray(mid).slice(0, positionSlots.mid);
+            selectedMID.forEach((p, i) => {
+                selectedPlayers.push({ player: p, posIndex: positionIndex + i });
+            });
+            positionIndex += positionSlots.mid;
+            
+            // ATT
+            const selectedATT = shuffleArray(att).slice(0, positionSlots.att);
+            selectedATT.forEach((p, i) => {
+                selectedPlayers.push({ player: p, posIndex: positionIndex + i });
+            });
+            
+            // Fill remaining slots with any available players if not enough in category
+            const usedNames = selectedPlayers.map(sp => sp.player.name);
+            const remaining = shuffleArray(allCards.filter(p => !usedNames.includes(p.name)));
+            let remainingIdx = 0;
+            
+            while (selectedPlayers.length < 6 && remainingIdx < remaining.length) {
+                const nextPosIndex = selectedPlayers.length;
+                selectedPlayers.push({ player: remaining[remainingIdx], posIndex: nextPosIndex });
+                remainingIdx++;
+            }
+            
+            // Place players on field
+            selectedPlayers.forEach(({ player, posIndex }) => {
+                const pos = formation[posIndex] || { x: 50, y: 50 };
+                addPlayerToField(player, pos.x, pos.y);
+            });
+        }
+
+        // Formation change
+        function setupFormationChange() {
+            document.getElementById('formation').addEventListener('change', () => {
+                updateStats();
+            });
+        }
+
+        // Initialize app
+        init();
+    </script>
 </body>
 </html>
